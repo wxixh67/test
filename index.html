@@ -323,6 +323,111 @@
             background: #e9ecef;
         }
         
+        /* 评论区域样式 */
+        .comments-section {
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .comments-section.active {
+            display: block;
+        }
+        
+        .comment {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .comment:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .comment-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .comment-user {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .comment-time {
+            color: #777;
+            font-size: 12px;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .comment-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+        
+        .comment-action {
+            font-size: 12px;
+            color: #777;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .comment-action:hover {
+            color: #6a89cc;
+        }
+        
+        .add-comment {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .comment-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            resize: none;
+            height: 40px;
+            line-height: 20px;
+        }
+        
+        .comment-submit {
+            background: #6a89cc;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .comment-submit:hover {
+            background: #5a79bc;
+        }
+        
         /* 右侧边栏 */
         .right-sidebar {
             background: white;
@@ -813,7 +918,7 @@
                     </div>
                 </div>
                 
-                <div class="post">
+                <div class="post" data-post-id="1">
                     <div class="post-header">
                         <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="用户头像" class="post-avatar">
                         <div>
@@ -829,11 +934,11 @@
                         <div>128 个赞 · 15 条评论</div>
                     </div>
                     <div class="post-actions-buttons">
-                        <div class="post-action-button">
+                        <div class="post-action-button like-btn">
                             <i class="far fa-thumbs-up"></i>
                             <span>赞</span>
                         </div>
-                        <div class="post-action-button">
+                        <div class="post-action-button comment-btn">
                             <i class="far fa-comment"></i>
                             <span>评论</span>
                         </div>
@@ -842,9 +947,49 @@
                             <span>分享</span>
                         </div>
                     </div>
+                    
+                    <!-- 评论区域 -->
+                    <div class="comments-section" id="comments-1">
+                        <div class="comment">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-user">李小雨</div>
+                                    <div class="comment-time">昨天 20:15</div>
+                                </div>
+                                <div class="comment-text">
+                                    哇，这风景太美了！下次可以一起去吗？
+                                </div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">赞</span>
+                                    <span class="comment-action">回复</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="用户头像" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-user">刘伟</div>
+                                    <div class="comment-time">昨天 21:30</div>
+                                </div>
+                                <div class="comment-text">
+                                    这是哪里啊？看起来是个徒步的好地方！
+                                </div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">赞</span>
+                                    <span class="comment-action">回复</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-comment">
+                            <textarea class="comment-input" placeholder="写下你的评论..." data-post-id="1"></textarea>
+                            <button class="comment-submit">发布</button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="post">
+                <div class="post" data-post-id="2">
                     <div class="post-header">
                         <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="用户头像" class="post-avatar">
                         <div>
@@ -859,17 +1004,41 @@
                         <div>56 个赞 · 8 条评论</div>
                     </div>
                     <div class="post-actions-buttons">
-                        <div class="post-action-button">
+                        <div class="post-action-button like-btn">
                             <i class="far fa-thumbs-up"></i>
                             <span>赞</span>
                         </div>
-                        <div class="post-action-button">
+                        <div class="post-action-button comment-btn">
                             <i class="far fa-comment"></i>
                             <span>评论</span>
                         </div>
                         <div class="post-action-button">
                             <i class="far fa-share-square"></i>
                             <span>分享</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 评论区域 -->
+                    <div class="comments-section" id="comments-2">
+                        <div class="comment">
+                            <img src="https://randomuser.me/api/portraits/women/25.jpg" alt="用户头像" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-user">赵婷</div>
+                                    <div class="comment-time">1小时前</div>
+                                </div>
+                                <div class="comment-text">
+                                    我也超喜欢《小王子》！最喜欢那句"真正重要的东西，用眼睛是看不见的"。
+                                </div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">赞</span>
+                                    <span class="comment-action">回复</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-comment">
+                            <textarea class="comment-input" placeholder="写下你的评论..." data-post-id="2"></textarea>
+                            <button class="comment-submit">发布</button>
                         </div>
                     </div>
                 </div>
@@ -1011,7 +1180,7 @@
                         `;
                     } else {
                         resultItem.innerHTML = `
-                            <i class="${result.icon}" style="width: 30px; text-align: center;"></i>
+                            <i class="${result.icon}" style="color: #6a89cc;"></i>
                             <div>
                                 <div style="font-weight: bold;">${result.name}</div>
                                 <div style="font-size: 12px; color: #777;">${result.type}</div>
@@ -1020,285 +1189,212 @@
                     }
                     
                     resultItem.addEventListener('click', function() {
-                        alert(`你点击了: ${result.name}`);
+                        searchInput.value = result.name;
                         searchResults.style.display = 'none';
-                        searchInput.value = '';
                     });
                     
                     searchResults.appendChild(resultItem);
                 });
                 searchResults.style.display = 'block';
             } else {
-                searchResults.innerHTML = '<div class="search-result-item">没有找到相关结果</div>';
-                searchResults.style.display = 'block';
+                searchResults.style.display = 'none';
             }
         });
         
-        // 点击页面其他区域关闭搜索结果
+        // 点击页面其他地方隐藏搜索结果
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.style.display = 'none';
             }
         });
         
-        // 帖子交互功能
-        document.querySelectorAll('.post-action-button').forEach(button => {
+        // 模态框功能
+        const createPostTrigger = document.getElementById('createPostTrigger');
+        const createPostModal = document.getElementById('createPostModal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const postForm = document.getElementById('postForm');
+        
+        createPostTrigger.addEventListener('click', function() {
+            createPostModal.style.display = 'flex';
+        });
+        
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                createPostModal.style.display = 'none';
+            });
+        });
+        
+        postForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const content = document.getElementById('postContent').value;
+            // 这里可以添加发布帖子的逻辑
+            alert('帖子发布成功！');
+            createPostModal.style.display = 'none';
+            // 清空表单
+            document.getElementById('postContent').value = '';
+            document.getElementById('postImage').value = '';
+        });
+        
+        // 移动端导航功能
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        
+        mobileNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // 移除所有active类
+                mobileNavItems.forEach(i => i.classList.remove('active'));
+                // 添加active类到当前项
+                this.classList.add('active');
+                
+                const target = this.getAttribute('data-target');
+                
+                if (target === 'feed') {
+                    // 显示主内容
+                    document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
+                        sidebar.classList.remove('active');
+                    });
+                } else if (target === 'createPostModal') {
+                    // 打开创建帖子模态框
+                    createPostModal.style.display = 'flex';
+                } else {
+                    // 显示对应的侧边栏
+                    document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
+                        sidebar.classList.remove('active');
+                    });
+                    document.getElementById(target).classList.add('active');
+                }
+            });
+        });
+        
+        // 移动端菜单按钮
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const leftSidebar = document.getElementById('leftSidebar');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            leftSidebar.classList.toggle('active');
+        });
+        
+        // 侧边栏切换按钮
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        
+        sidebarToggle.addEventListener('click', function() {
+            leftSidebar.classList.toggle('active');
+        });
+        
+        // 点赞功能
+        const likeButtons = document.querySelectorAll('.like-btn');
+        
+        likeButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const icon = this.querySelector('i');
-                const text = this.querySelector('span');
-                
                 if (icon.classList.contains('far')) {
                     icon.classList.remove('far');
                     icon.classList.add('fas');
                     this.style.color = '#6a89cc';
-                    
-                    // 更新点赞/评论/分享数量
-                    if (text.textContent === '赞') {
-                        const stats = this.closest('.post').querySelector('.post-stats div');
-                        const currentLikes = parseInt(stats.textContent) || 0;
-                        stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
-                    }
                 } else {
                     icon.classList.remove('fas');
                     icon.classList.add('far');
                     this.style.color = '';
-                    
-                    // 更新点赞/评论/分享数量
-                    if (text.textContent === '赞') {
-                        const stats = this.closest('.post').querySelector('.post-stats div');
-                        const currentLikes = parseInt(stats.textContent) || 1;
-                        stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
-                    }
                 }
             });
         });
         
-        // 移动端导航项点击效果
-        document.querySelectorAll('.mobile-nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.mobile-nav-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                const target = this.getAttribute('data-target');
-                if (target) {
-                    if (target === 'feed') {
-                        // 显示主内容
-                        document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
-                            sidebar.classList.remove('active');
-                        });
-                    } else if (target === 'createPostModal') {
-                        // 打开创建帖子模态框
-                        document.getElementById('createPostModal').style.display = 'flex';
-                    } else {
-                        // 切换侧边栏
-                        document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
-                            sidebar.classList.remove('active');
-                        });
-                        document.getElementById(target).classList.add('active');
-                    }
-                }
-            });
-        });
+        // 评论显示/隐藏功能
+        const commentButtons = document.querySelectorAll('.comment-btn');
         
-        // 移动端菜单按钮点击效果
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('leftSidebar').classList.toggle('active');
-        });
-        
-        // 侧边栏切换按钮
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.getElementById('rightSidebar').classList.toggle('active');
-        });
-        
-        // 模态框功能
-        const modal = document.getElementById('createPostModal');
-        const closeModalButtons = document.querySelectorAll('.close-modal');
-        const createPostTrigger = document.getElementById('createPostTrigger');
-        const postForm = document.getElementById('postForm');
-        
-        // 打开模态框
-        createPostTrigger.addEventListener('click', function() {
-            modal.style.display = 'flex';
-        });
-        
-        // 关闭模态框
-        closeModalButtons.forEach(button => {
+        commentButtons.forEach(button => {
             button.addEventListener('click', function() {
-                modal.style.display = 'none';
+                const post = this.closest('.post');
+                const postId = post.getAttribute('data-post-id');
+                const commentsSection = document.getElementById(`comments-${postId}`);
+                
+                // 切换评论区域的显示状态
+                commentsSection.classList.toggle('active');
+                
+                // 如果评论区域显示，则聚焦到评论输入框
+                if (commentsSection.classList.contains('active')) {
+                    const commentInput = commentsSection.querySelector('.comment-input');
+                    setTimeout(() => {
+                        commentInput.focus();
+                    }, 100);
+                }
             });
         });
         
-        // 点击模态框外部关闭
-        window.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
+        // 添加评论功能
+        const commentSubmitButtons = document.querySelectorAll('.comment-submit');
         
-        // 表单提交
-        postForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const content = document.getElementById('postContent').value;
-            const imageFile = document.getElementById('postImage').files[0];
-            
-            if (!content.trim()) {
-                alert('请输入帖子内容');
-                return;
-            }
-            
-            // 创建新帖子
-            const newPost = document.createElement('div');
-            newPost.className = 'post';
-            
-            let imageHTML = '';
-            if (imageFile) {
-                const imageUrl = URL.createObjectURL(imageFile);
-                imageHTML = `<img src="${imageUrl}" alt="帖子图片" class="post-image">`;
-            }
-            
-            newPost.innerHTML = `
-                <div class="post-header">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="post-avatar">
-                    <div>
-                        <div class="post-user">李小雨</div>
-                        <div class="post-time">刚刚 · <i class="fas fa-globe-asia"></i></div>
-                    </div>
-                </div>
-                <div class="post-content">${content}</div>
-                ${imageHTML}
-                <div class="post-stats">
-                    <div>0 个赞 · 0 条评论</div>
-                </div>
-                <div class="post-actions-buttons">
-                    <div class="post-action-button">
-                        <i class="far fa-thumbs-up"></i>
-                        <span>赞</span>
-                    </div>
-                    <div class="post-action-button">
-                        <i class="far fa-comment"></i>
-                        <span>评论</span>
-                    </div>
-                    <div class="post-action-button">
-                        <i class="far fa-share-square"></i>
-                        <span>分享</span>
-                    </div>
-                </div>
-            `;
-            
-            // 插入到帖子列表顶部
-            document.querySelector('.feed').insertBefore(newPost, document.querySelector('.feed').children[3]);
-            
-            // 重置表单
-            postForm.reset();
-            
-            // 关闭模态框
-            modal.style.display = 'none';
-            
-            // 添加新帖子的交互功能
-            newPost.querySelectorAll('.post-action-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const icon = this.querySelector('i');
-                    const text = this.querySelector('span');
+        commentSubmitButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const commentsSection = this.closest('.comments-section');
+                const commentInput = commentsSection.querySelector('.comment-input');
+                const commentText = commentInput.value.trim();
+                
+                if (commentText) {
+                    // 创建新评论
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment';
+                    newComment.innerHTML = `
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <div class="comment-user">李小雨</div>
+                                <div class="comment-time">刚刚</div>
+                            </div>
+                            <div class="comment-text">${commentText}</div>
+                            <div class="comment-actions">
+                                <span class="comment-action">赞</span>
+                                <span class="comment-action">回复</span>
+                            </div>
+                        </div>
+                    `;
                     
-                    if (icon.classList.contains('far')) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                        this.style.color = '#6a89cc';
-                        
-                        // 更新点赞/评论/分享数量
-                        if (text.textContent === '赞') {
-                            const stats = this.closest('.post').querySelector('.post-stats div');
-                            const currentLikes = parseInt(stats.textContent) || 0;
-                            stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
-                        }
-                    } else {
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                        this.style.color = '';
-                        
-                        // 更新点赞/评论/分享数量
-                        if (text.textContent === '赞') {
-                            const stats = this.closest('.post').querySelector('.post-stats div');
-                            const currentLikes = parseInt(stats.textContent) || 1;
-                            stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
-                        }
+                    // 在"添加评论"区域之前插入新评论
+                    const addCommentSection = commentsSection.querySelector('.add-comment');
+                    commentsSection.insertBefore(newComment, addCommentSection);
+                    
+                    // 清空输入框
+                    commentInput.value = '';
+                    
+                    // 更新评论数量
+                    const post = commentsSection.closest('.post');
+                    const postStats = post.querySelector('.post-stats div');
+                    const currentStats = postStats.textContent;
+                    const commentCountMatch = currentStats.match(/(\d+) 条评论/);
+                    
+                    if (commentCountMatch) {
+                        const newCount = parseInt(commentCountMatch[1]) + 1;
+                        postStats.textContent = currentStats.replace(/(\d+) 条评论/, `${newCount} 条评论`);
                     }
-                });
+                }
             });
-            
-            alert('帖子发布成功！');
         });
         
-        // 模拟动态加载
-        setTimeout(() => {
-            const newPost = document.createElement('div');
-            newPost.className = 'post';
-            newPost.innerHTML = `
-                <div class="post-header">
-                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="post-avatar">
-                    <div>
-                        <div class="post-user">李小雨</div>
-                        <div class="post-time">刚刚 · <i class="fas fa-globe-asia"></i></div>
-                    </div>
-                </div>
-                <div class="post-content">
-                    刚刚完成了我温馨的个人导航页设计！希望大家喜欢这个温暖的风格 ❤️
-                </div>
-                <div class="post-stats">
-                    <div>0 个赞 · 0 条评论</div>
-                </div>
-                <div class="post-actions-buttons">
-                    <div class="post-action-button">
-                        <i class="far fa-thumbs-up"></i>
-                        <span>赞</span>
-                    </div>
-                    <div class="post-action-button">
-                        <i class="far fa-comment"></i>
-                        <span>评论</span>
-                    </div>
-                    <div class="post-action-button">
-                        <i class="far fa-share-square"></i>
-                        <span>分享</span>
-                    </div>
-                </div>
-            `;
-            document.querySelector('.feed').insertBefore(newPost, document.querySelector('.feed').children[3]);
-            
-            // 添加新帖子的交互功能
-            newPost.querySelectorAll('.post-action-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const icon = this.querySelector('i');
-                    const text = this.querySelector('span');
-                    
-                    if (icon.classList.contains('far')) {
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                        this.style.color = '#6a89cc';
-                        
-                        // 更新点赞/评论/分享数量
-                        if (text.textContent === '赞') {
-                            const stats = this.closest('.post').querySelector('.post-stats div');
-                            const currentLikes = parseInt(stats.textContent) || 0;
-                            stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
-                        }
-                    } else {
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                        this.style.color = '';
-                        
-                        // 更新点赞/评论/分享数量
-                        if (text.textContent === '赞') {
-                            const stats = this.closest('.post').querySelector('.post-stats div');
-                            const currentLikes = parseInt(stats.textContent) || 1;
-                            stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
-                        }
-                    }
+        // 按Enter键提交评论
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
+                // 检查是否同时按下了Ctrl或Cmd键
+                if (e.ctrlKey || e.metaKey) {
+                    // 插入换行
+                    const start = e.target.selectionStart;
+                    const end = e.target.selectionEnd;
+                    e.target.value = e.target.value.substring(0, start) + '\n' + e.target.value.substring(end);
+                    e.target.selectionStart = e.target.selectionEnd = start + 1;
+                } else {
+                    // 提交评论
+                    e.preventDefault();
+                    e.target.closest('.add-comment').querySelector('.comment-submit').click();
+                }
+            }
+        });
+        
+        // 响应式调整
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
+                    sidebar.classList.remove('active');
                 });
-            });
-        }, 3000);
+            }
+        });
     </script>
 </body>
 </html>
