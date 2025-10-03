@@ -1,8 +1,8 @@
 // 图片配置：请将下面的路径替换为您自己的图片
 const imageList = [
-    { src: './images/photo1.jpg', alt: '图片描述 1' },
-    { src: './images/photo2.jpg', alt: '图片描述 2' },
-    { src: './images/photo3.jpg', alt: '图片描述 3' },
+    { src: './images/1.png', alt: '图片描述 1' },
+    { src: './images/2.png', alt: '图片描述 2' },
+    { src: './images/3.png', alt: '图片描述 3' },
     { src: './images/photo4.jpg', alt: '图片描述 4' },
     { src: './images/photo5.jpg', alt: '图片描述 5' },
     { src: './images/photo6.jpg', alt: '图片描述 6' },
