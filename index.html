@@ -44,11 +44,15 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
 
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
         }
 
         .description {
@@ -61,16 +65,23 @@
         }
 
         .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
             background: none;
             border: 1px solid var(--border-color);
             color: var(--text-color);
-            padding: 5px 10px;
-            border-radius: 4px;
+            padding: 8px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--category-bg);
         }
 
         .category {
@@ -160,19 +171,33 @@
                 grid-template-columns: 1fr;
             }
             
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
             .theme-toggle {
-                position: static;
-                margin-bottom: 1rem;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+            
+            h1 {
+                margin-bottom: 0.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle">切换深色模式</button>
-    
     <header>
-        <h1>Facebook服务导航站</h1>
-        <p class="description">官方购买渠道与客服支持</p>
+        <div>
+            <h1>Facebook服务导航站</h1>
+            <p class="description">官方购买渠道与客服支持</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle" title="切换深色模式">🌙</button>
     </header>
     
     <main>
@@ -335,16 +360,17 @@
             
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
+            updateButtonIcon();
         });
         
-        // 更新按钮文本
-        function updateButtonText() {
+        // 更新按钮图标
+        function updateButtonIcon() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
-            themeToggle.textContent = currentTheme === 'light' ? '切换深色模式' : '切换浅色模式';
+            themeToggle.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+            themeToggle.title = currentTheme === 'light' ? '切换深色模式' : '切换浅色模式';
         }
         
-        themeToggle.addEventListener('click', updateButtonText);
-        updateButtonText();
+        updateButtonIcon();
     </script>
 </body>
 </html>
