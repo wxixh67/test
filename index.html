@@ -6,6 +6,7 @@
     <title>温馨个人导航页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 原有的CSS样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -687,6 +688,34 @@
             background: #e9ecef;
         }
         
+        /* 新增：侧边栏关闭按钮 */
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #777;
+            cursor: pointer;
+            z-index: 201;
+        }
+        
+        /* 新增：返回按钮 */
+        .back-button {
+            display: none;
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 101;
+        }
+        
         /* 响应式设计 */
         @media (max-width: 992px) {
             .main-content {
@@ -770,6 +799,16 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+            
+            /* 移动端显示侧边栏关闭按钮 */
+            .sidebar-close {
+                display: block;
+            }
+            
+            /* 移动端显示返回按钮 */
+            .back-button {
+                display: block;
             }
         }
         
@@ -871,6 +910,10 @@
             <button class="mobile-menu-btn">
                 <i class="fas fa-bars"></i>
             </button>
+            <!-- 新增：返回按钮 -->
+            <button class="back-button" id="backButton">
+                <i class="fas fa-arrow-left"></i>
+            </button>
             <div class="logo">
                 <i class="fas fa-heart"></i>
                 <span>温馨导航</span>
@@ -895,6 +938,10 @@
         <div class="main-content">
             <!-- 左侧边栏 -->
             <div class="sidebar" id="leftSidebar">
+                <!-- 新增：侧边栏关闭按钮 -->
+                <button class="sidebar-close" id="leftSidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
                 <div class="profile-card">
                     <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="个人头像" class="profile-img">
                     <div class="profile-name">李小雨</div>
@@ -1062,6 +1109,10 @@
             
             <!-- 右侧边栏 -->
             <div class="right-sidebar" id="rightSidebar">
+                <!-- 新增：侧边栏关闭按钮 -->
+                <button class="sidebar-close" id="rightSidebarClose">
+                    <i class="fas fa-times"></i>
+                </button>
                 <div class="section-title">生日</div>
                 <div class="birthday-card">
                     <div class="birthday-icon">
@@ -1133,14 +1184,14 @@
                 <span>个人</span>
             </div>
             <div class="mobile-nav-item" data-target="createPostModal">
-                <i class="fas fa-plus-circle"></i>
+                <i class="fas fa-plus-square"></i>
                 <span>发布</span>
             </div>
             <div class="mobile-nav-item" data-target="rightSidebar">
                 <i class="fas fa-bell"></i>
-                <span>动态</span>
+                <span>通知</span>
             </div>
-            <div class="mobile-nav-item">
+            <div class="mobile-nav-item" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
                 <span>菜单</span>
             </div>
@@ -1149,290 +1200,266 @@
     
     <!-- 侧边栏切换按钮 -->
     <button class="sidebar-toggle" id="sidebarToggle">
-        <i class="fas fa-bars"></i>
+        <i class="fas fa-chevron-left" id="sidebarToggleIcon"></i>
     </button>
-
+    
     <script>
-        // 搜索功能
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        
-        // 模拟搜索结果
-        const mockResults = [
-            { name: '张明', type: '好友', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
-            { name: '王丽', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
-            { name: '前端开发小组', type: '小组', icon: 'fas fa-users' },
-            { name: '摄影爱好者', type: '页面', icon: 'fas fa-camera' },
-            { name: '李小雨', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' }
-        ];
-        
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase();
-            
-            if (query.length === 0) {
-                searchResults.style.display = 'none';
-                return;
-            }
-            
-            // 过滤结果
-            const filteredResults = mockResults.filter(item => 
-                item.name.toLowerCase().includes(query)
-            );
-            
-            // 显示结果
-            if (filteredResults.length > 0) {
-                searchResults.innerHTML = '';
-                filteredResults.forEach(result => {
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'search-result-item';
-                    
-                    if (result.avatar) {
-                        resultItem.innerHTML = `
-                            <img src="${result.avatar}" alt="${result.name}" style="width: 30px; height: 30px; border-radius: 50%;">
-                            <div>
-                                <div style="font-weight: bold;">${result.name}</div>
-                                <div style="font-size: 12px; color: #777;">${result.type}</div>
-                            </div>
-                        `;
-                    } else {
-                        resultItem.innerHTML = `
-                            <i class="${result.icon}" style="color: #6a89cc;"></i>
-                            <div>
-                                <div style="font-weight: bold;">${result.name}</div>
-                                <div style="font-size: 12px; color: #777;">${result.type}</div>
-                            </div>
-                        `;
-                    }
-                    
-                    searchResults.appendChild(resultItem);
-                });
-                searchResults.style.display = 'block';
-            } else {
-                searchResults.style.display = 'none';
-            }
-        });
-        
-        // 点击其他地方隐藏搜索结果
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
-        });
-        
-        // 模态框功能
-        const modal = document.getElementById('createPostModal');
-        const createPostTrigger = document.getElementById('createPostTrigger');
-        const closeModalButtons = document.querySelectorAll('.close-modal');
-        
-        // 打开模态框
-        createPostTrigger.addEventListener('click', function() {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 防止背景滚动
-        });
-        
-        // 关闭模态框
-        closeModalButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-        });
-        
-        // 点击模态框外部关闭
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // ESC键关闭模态框
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // 表单提交
-        const postForm = document.getElementById('postForm');
-        postForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const content = document.getElementById('postContent').value;
-            if (content.trim() !== '') {
-                alert('帖子发布成功！');
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                postForm.reset();
-            } else {
-                alert('请填写帖子内容！');
-            }
-        });
-        
-        // 评论功能
-        const commentButtons = document.querySelectorAll('.comment-btn');
-        const commentInputs = document.querySelectorAll('.comment-input');
-        const commentSubmits = document.querySelectorAll('.comment-submit');
-        
-        commentButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const postId = this.closest('.post').getAttribute('data-post-id');
-                const commentsSection = document.getElementById(`comments-${postId}`);
-                commentsSection.classList.toggle('active');
-            });
-        });
-        
-        commentSubmits.forEach((button, index) => {
-            button.addEventListener('click', function() {
-                const input = commentInputs[index];
-                const postId = input.getAttribute('data-post-id');
-                
-                if (input.value.trim() !== '') {
-                    const commentsSection = document.getElementById(`comments-${postId}`);
-                    
-                    const newComment = document.createElement('div');
-                    newComment.className = 'comment';
-                    newComment.innerHTML = `
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="comment-avatar">
-                        <div class="comment-content">
-                            <div class="comment-header">
-                                <div class="comment-user">李小雨</div>
-                                <div class="comment-time">刚刚</div>
-                            </div>
-                            <div class="comment-text">${input.value}</div>
-                            <div class="comment-actions">
-                                <span class="comment-action">赞</span>
-                                <span class="comment-action">回复</span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    const addComment = commentsSection.querySelector('.add-comment');
-                    commentsSection.insertBefore(newComment, addComment);
-                    
-                    input.value = '';
-                    
-                    // 更新帖子统计
-                    const postStats = document.querySelector(`.post[data-post-id="${postId}"] .post-stats div`);
-                    const currentComments = parseInt(postStats.textContent.match(/\d+/g)[1]);
-                    postStats.textContent = postStats.textContent.replace(/\d+ 条评论/, `${currentComments + 1} 条评论`);
-                }
-            });
-        });
-        
-        // 点赞功能
-        const likeButtons = document.querySelectorAll('.like-btn');
-        
-        likeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                const text = this.querySelector('span');
-                
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    text.textContent = '已赞';
-                    this.style.color = '#6a89cc';
-                    
-                    // 更新帖子统计
-                    const postStats = this.closest('.post').querySelector('.post-stats div');
-                    const currentLikes = parseInt(postStats.textContent.match(/\d+/g)[0]);
-                    postStats.textContent = postStats.textContent.replace(/\d+ 个赞/, `${currentLikes + 1} 个赞`);
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    text.textContent = '赞';
-                    this.style.color = '';
-                    
-                    // 更新帖子统计
-                    const postStats = this.closest('.post').querySelector('.post-stats div');
-                    const currentLikes = parseInt(postStats.textContent.match(/\d+/g)[0]);
-                    postStats.textContent = postStats.textContent.replace(/\d+ 个赞/, `${currentLikes - 1} 个赞`);
-                }
-            });
-        });
-        
-        // 移动端导航
-        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
-        const leftSidebar = document.getElementById('leftSidebar');
-        const rightSidebar = document.getElementById('rightSidebar');
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        
-        mobileNavItems.forEach(item => {
-            item.addEventListener('click', function() {
-                const target = this.getAttribute('data-target');
-                
-                // 移除所有活动状态
-                mobileNavItems.forEach(navItem => {
-                    navItem.classList.remove('active');
-                });
-                
-                // 添加当前活动状态
-                this.classList.add('active');
-                
-                // 处理不同目标
-                if (target === 'feed') {
-                    leftSidebar.classList.remove('active');
-                    rightSidebar.classList.remove('active');
-                } else if (target === 'leftSidebar') {
-                    leftSidebar.classList.add('active');
-                    rightSidebar.classList.remove('active');
-                } else if (target === 'rightSidebar') {
-                    rightSidebar.classList.add('active');
-                    leftSidebar.classList.remove('active');
-                } else if (target === 'createPostModal') {
-                    modal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-        });
-        
-        // 侧边栏切换按钮
-        let currentSidebar = 'left';
-        
-        sidebarToggle.addEventListener('click', function() {
-            if (currentSidebar === 'left') {
-                leftSidebar.classList.toggle('active');
-                rightSidebar.classList.remove('active');
-                currentSidebar = 'left';
-            } else {
-                rightSidebar.classList.toggle('active');
-                leftSidebar.classList.remove('active');
-                currentSidebar = 'right';
-            }
-        });
-        
-        // 移动端菜单按钮
-        mobileMenuBtn.addEventListener('click', function() {
-            leftSidebar.classList.toggle('active');
-        });
-        
-        // 点击侧边栏外部关闭侧边栏
-        document.addEventListener('click', function(e) {
-            if (leftSidebar.classList.contains('active') && 
-                !leftSidebar.contains(e.target) && 
-                !mobileMenuBtn.contains(e.target) &&
-                !sidebarToggle.contains(e.target)) {
-                leftSidebar.classList.remove('active');
-            }
-            
-            if (rightSidebar.classList.contains('active') && 
-                !rightSidebar.contains(e.target) && 
-                !sidebarToggle.contains(e.target)) {
-                rightSidebar.classList.remove('active');
-            }
-        });
-        
-        // 初始化页面
+        // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
-            // 随机生成一些点赞数
-            const postStats = document.querySelectorAll('.post-stats div');
-            postStats.forEach(stat => {
-                const likes = Math.floor(Math.random() * 100) + 20;
-                const comments = Math.floor(Math.random() * 20) + 5;
-                stat.textContent = `${likes} 个赞 · ${comments} 条评论`;
+            // 获取DOM元素
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const leftSidebar = document.getElementById('leftSidebar');
+            const rightSidebar = document.getElementById('rightSidebar');
+            const leftSidebarClose = document.getElementById('leftSidebarClose');
+            const rightSidebarClose = document.getElementById('rightSidebarClose');
+            const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
+            const createPostTrigger = document.getElementById('createPostTrigger');
+            const createPostModal = document.getElementById('createPostModal');
+            const closeModalButtons = document.querySelectorAll('.close-modal');
+            const postForm = document.getElementById('postForm');
+            const commentButtons = document.querySelectorAll('.comment-btn');
+            const commentInputs = document.querySelectorAll('.comment-input');
+            const commentSubmits = document.querySelectorAll('.comment-submit');
+            const likeButtons = document.querySelectorAll('.like-btn');
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const backButton = document.getElementById('backButton');
+            
+            // 模拟搜索结果数据
+            const searchData = [
+                { name: '张明', type: '好友', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
+                { name: '王丽', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
+                { name: '前端开发小组', type: '小组', icon: 'fas fa-users' },
+                { name: '摄影爱好者', type: '页面', icon: 'fas fa-camera' },
+                { name: '周末音乐会', type: '活动', icon: 'fas fa-music' }
+            ];
+            
+            // 移动端菜单按钮点击事件
+            mobileMenuBtn.addEventListener('click', function() {
+                leftSidebar.classList.toggle('active');
             });
+            
+            // 侧边栏关闭按钮点击事件
+            leftSidebarClose.addEventListener('click', function() {
+                leftSidebar.classList.remove('active');
+            });
+            
+            rightSidebarClose.addEventListener('click', function() {
+                rightSidebar.classList.remove('active');
+            });
+            
+            // 移动端导航项点击事件
+            mobileNavItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // 移除所有活动状态
+                    mobileNavItems.forEach(navItem => {
+                        navItem.classList.remove('active');
+                    });
+                    
+                    // 添加当前活动状态
+                    this.classList.add('active');
+                    
+                    // 处理不同目标的显示
+                    if (target === 'feed') {
+                        // 显示主内容区
+                        leftSidebar.classList.remove('active');
+                        rightSidebar.classList.remove('active');
+                    } else if (target === 'leftSidebar') {
+                        // 显示左侧边栏
+                        leftSidebar.classList.add('active');
+                        rightSidebar.classList.remove('active');
+                    } else if (target === 'rightSidebar') {
+                        // 显示右侧边栏
+                        rightSidebar.classList.add('active');
+                        leftSidebar.classList.remove('active');
+                    } else if (target === 'createPostModal') {
+                        // 显示创建帖子模态框
+                        createPostModal.style.display = 'flex';
+                        leftSidebar.classList.remove('active');
+                        rightSidebar.classList.remove('active');
+                    }
+                });
+            });
+            
+            // 侧边栏切换按钮点击事件
+            sidebarToggle.addEventListener('click', function() {
+                // 切换侧边栏显示
+                if (leftSidebar.classList.contains('active')) {
+                    leftSidebar.classList.remove('active');
+                    rightSidebar.classList.remove('active');
+                } else {
+                    leftSidebar.classList.add('active');
+                }
+            });
+            
+            // 创建帖子触发按钮点击事件
+            createPostTrigger.addEventListener('click', function() {
+                createPostModal.style.display = 'flex';
+            });
+            
+            // 关闭模态框按钮点击事件
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    createPostModal.style.display = 'none';
+                });
+            });
+            
+            // 点击模态框外部关闭模态框
+            createPostModal.addEventListener('click', function(e) {
+                if (e.target === createPostModal) {
+                    createPostModal.style.display = 'none';
+                }
+            });
+            
+            // 帖子表单提交事件
+            postForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const postContent = document.getElementById('postContent').value;
+                
+                if (postContent.trim() !== '') {
+                    // 在实际应用中，这里会发送数据到服务器
+                    alert('帖子发布成功！');
+                    document.getElementById('postContent').value = '';
+                    createPostModal.style.display = 'none';
+                } else {
+                    alert('请输入帖子内容！');
+                }
+            });
+            
+            // 评论按钮点击事件
+            commentButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const postId = this.closest('.post').getAttribute('data-post-id');
+                    const commentsSection = document.getElementById(`comments-${postId}`);
+                    commentsSection.classList.toggle('active');
+                });
+            });
+            
+            // 评论提交事件
+            commentSubmits.forEach(button => {
+                button.addEventListener('click', function() {
+                    const postId = this.closest('.add-comment').querySelector('.comment-input').getAttribute('data-post-id');
+                    const commentInput = document.querySelector(`.comment-input[data-post-id="${postId}"]`);
+                    const commentText = commentInput.value.trim();
+                    
+                    if (commentText !== '') {
+                        // 在实际应用中，这里会发送数据到服务器
+                        const commentsSection = document.getElementById(`comments-${postId}`);
+                        const newComment = document.createElement('div');
+                        newComment.className = 'comment';
+                        newComment.innerHTML = `
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="comment-avatar">
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-user">李小雨</div>
+                                    <div class="comment-time">刚刚</div>
+                                </div>
+                                <div class="comment-text">${commentText}</div>
+                                <div class="comment-actions">
+                                    <span class="comment-action">赞</span>
+                                    <span class="comment-action">回复</span>
+                                </div>
+                            </div>
+                        `;
+                        
+                        commentsSection.insertBefore(newComment, commentsSection.lastElementChild);
+                        commentInput.value = '';
+                    }
+                });
+            });
+            
+            // 点赞按钮点击事件
+            likeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        text.textContent = '已赞';
+                        this.style.color = '#6a89cc';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        text.textContent = '赞';
+                        this.style.color = '';
+                    }
+                });
+            });
+            
+            // 搜索输入事件
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                
+                if (query === '') {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+                
+                // 过滤搜索结果
+                const filteredResults = searchData.filter(item => 
+                    item.name.toLowerCase().includes(query)
+                );
+                
+                // 显示搜索结果
+                if (filteredResults.length > 0) {
+                    searchResults.innerHTML = '';
+                    filteredResults.forEach(result => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        
+                        if (result.avatar) {
+                            resultItem.innerHTML = `
+                                <img src="${result.avatar}" alt="${result.name}" style="width: 30px; height: 30px; border-radius: 50%;">
+                                <div>
+                                    <div>${result.name}</div>
+                                    <div style="font-size: 12px; color: #777;">${result.type}</div>
+                                </div>
+                            `;
+                        } else {
+                            resultItem.innerHTML = `
+                                <i class="${result.icon}" style="color: #6a89cc;"></i>
+                                <div>
+                                    <div>${result.name}</div>
+                                    <div style="font-size: 12px; color: #777;">${result.type}</div>
+                                </div>
+                            `;
+                        }
+                        
+                        searchResults.appendChild(resultItem);
+                    });
+                    
+                    searchResults.style.display = 'block';
+                } else {
+                    searchResults.style.display = 'none';
+                }
+            });
+            
+            // 点击页面其他区域隐藏搜索结果
+            document.addEventListener('click', function(e) {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+            
+            // 返回按钮点击事件
+            backButton.addEventListener('click', function() {
+                // 隐藏所有侧边栏，显示主内容
+                leftSidebar.classList.remove('active');
+                rightSidebar.classList.remove('active');
+                
+                // 在实际应用中，这里可能会有更复杂的导航逻辑
+                // 例如使用浏览器的history API返回上一页
+                // history.back();
+            });
+            
+            // 初始隐藏搜索结果
+            searchResults.style.display = 'none';
         });
     </script>
 </body>
