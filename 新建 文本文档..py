@@ -1,22 +1,38 @@
 import os
+import glob
 
-# 设置你的图片文件夹路径
-folder_path = r'C:\Users\l\Documents\GitHub\test\images'
+def generate_image_list():
+    # 图片目录路径
+    images_dir = r'C:\Users\l\Documents\GitHub\test\images'
+    
+    # 支持的图片格式
+    image_extensions = ('*.png', '*.jpg', '*.jpeg', '*.gif', '*.webp', '*.svg', '*.bmp')
+    
+    # 获取所有图片文件
+    image_files = []
+    for ext in image_extensions:
+        image_files.extend(glob.glob(os.path.join(images_dir, ext)))
+    
+    # 只获取文件名并排序
+    image_files = [os.path.basename(f) for f in image_files]
+    image_files.sort()  # 按文件名排序
+    
+    # 生成格式化的输出
+    output = []
+    for i, filename in enumerate(image_files, 1):
+        output.append(f"    {{ src: './images/{filename}', alt: '图片描述 {i}' }}")
+    
+    formatted_output = ',\n'.join(output)
+    
+    print('生成的图片列表:')
+    print(formatted_output)
+    
+    # 保存到文件
+    with open('image-list.txt', 'w', encoding='utf-8') as f:
+        f.write(formatted_output)
+    
+    print("\n已保存到 image-list.txt")
+    return formatted_output
 
-# 获取文件夹中的所有文件
-files = os.listdir(folder_path)
-
-# 过滤出所有图片文件（可以根据需要调整支持的格式）
-image_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp']
-images = [f for f in files if any(f.lower().endswith(ext) for ext in image_extensions)]
-
-# 生成所需的格式
-image_list = []
-for i, image in enumerate(images, 1):
-    # 获取文件扩展名并生成格式
-    file_name, file_extension = os.path.splitext(image)
-    image_list.append(f"{{ src: './images/{image}', alt: '图片描述 {i}' }}")
-
-# 打印结果
-for item in image_list:
-    print(item)
+if __name__ == "__main__":
+    generate_image_list()
