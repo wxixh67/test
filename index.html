@@ -50,9 +50,20 @@
             position: relative;
         }
 
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .title-section {
+            flex: 1;
+        }
+
         h1 {
             font-size: 1.8rem;
-            margin-bottom: 0;
+            margin-bottom: 0.2rem;
         }
 
         .description {
@@ -78,6 +89,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
+            flex-shrink: 0;
         }
 
         .theme-toggle:hover {
@@ -171,33 +183,41 @@
                 grid-template-columns: 1fr;
             }
             
-            header {
-                flex-direction: column;
-                align-items: flex-start;
+            .header-content {
+                flex-direction: row;
+                align-items: center;
             }
             
-            .theme-toggle {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
+            .title-section {
+                margin-right: 15px;
             }
             
             h1 {
-                margin-bottom: 0.5rem;
+                font-size: 1.5rem;
+                margin-bottom: 0.3rem;
+            }
+            
+            .description {
+                font-size: 0.9rem;
+            }
+            
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <div>
-            <h1>Facebook服务导航站</h1>
-            <p class="description">官方购买渠道与客服支持</p>
+        <div class="header-content">
+            <div class="title-section">
+                <h1>Facebook服务导航站</h1>
+                <p class="description">官方购买渠道与客服支持</p>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="切换深色模式">🌙</button>
         </div>
-        <button class="theme-toggle" id="themeToggle" title="切换深色模式">🌙</button>
     </header>
     
     <main>
@@ -232,7 +252,7 @@
                     </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://m.facebook.com/">
+                    <a href="https://www.facebook.com/">
                         <div class="link-icon">🌐</div>
                         <div class="link-content">
                             <div>脸书官网</div>
