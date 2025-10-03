@@ -181,16 +181,25 @@ body {
         right: 12px;
     }
     
-    /* 新增：移动端灯箱图片宽度与屏幕一致 */
+    /* 优化移动端灯箱图片显示 */
     .lightbox-content img {
-        width: 100%;
+        width: 95vw;
+        max-width: 95vw;
         height: auto;
         object-fit: contain;
     }
     
-    /* 可选：调整灯箱内容区域以更好地适应移动端 */
+    /* 调整灯箱内容区域以更好地适应移动端 */
     .lightbox-content {
-        width: 95%;
-        max-height: 80%;
+        width: 100%;
+        max-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 确保灯箱背景完全覆盖屏幕 */
+    .lightbox {
+        padding: 0 10px;
     }
 }
