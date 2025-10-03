@@ -17,6 +17,8 @@
             background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 70px; /* 为底部导航栏留出空间 */
         }
         
         .container {
@@ -57,6 +59,7 @@
             flex: 1;
             max-width: 500px;
             margin: 0 20px;
+            position: relative;
         }
         
         .search-bar input {
@@ -71,6 +74,38 @@
         
         .search-bar input::placeholder {
             color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+            display: none;
+            z-index: 101;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .search-result-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-result-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
         }
         
         .nav-icons {
@@ -94,6 +129,7 @@
             display: grid;
             grid-template-columns: 1fr 2fr 1fr;
             gap: 20px;
+            transition: all 0.3s;
         }
         
         /* 左侧边栏 */
@@ -102,6 +138,7 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
         }
         
         .profile-card {
@@ -213,6 +250,12 @@
             background: #f8f9fa;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .post:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .post-header {
@@ -246,6 +289,8 @@
             width: 100%;
             border-radius: 10px;
             margin-bottom: 15px;
+            max-height: 400px;
+            object-fit: cover;
         }
         
         .post-stats {
@@ -284,6 +329,7 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
         }
         
         .section-title {
@@ -303,6 +349,7 @@
             background: #f8f9fa;
             margin-bottom: 15px;
             transition: all 0.3s;
+            cursor: pointer;
         }
         
         .birthday-card:hover, .event-card:hover {
@@ -406,6 +453,119 @@
             cursor: pointer;
         }
         
+        /* 侧边栏切换按钮 */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #6a89cc;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 99;
+            font-size: 20px;
+        }
+        
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #6a89cc;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a79bc;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
         /* 响应式设计 */
         @media (max-width: 992px) {
             .main-content {
@@ -414,6 +574,18 @@
             
             .sidebar, .right-sidebar {
                 display: none;
+            }
+            
+            .sidebar.active, .right-sidebar.active {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 200;
+                border-radius: 0;
+                overflow-y: auto;
             }
             
             .mobile-nav {
@@ -471,6 +643,12 @@
             .profile-img {
                 width: 80px;
                 height: 80px;
+            }
+            
+            .sidebar-toggle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
         }
         
@@ -542,6 +720,30 @@
     <div class="decoration decoration-1"></div>
     <div class="decoration decoration-2"></div>
     
+    <!-- 模态框 -->
+    <div class="modal" id="createPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">创建新帖子</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="postContent">分享你的想法</label>
+                    <textarea id="postContent" placeholder="今天有什么新鲜事想分享？"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="postImage">添加图片（可选）</label>
+                    <input type="file" id="postImage" accept="image/*">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary close-modal">取消</button>
+                    <button type="submit" class="btn btn-primary">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <div class="container">
         <!-- 顶部导航栏 -->
         <header class="header">
@@ -553,7 +755,10 @@
                 <span>温馨导航</span>
             </div>
             <div class="search-bar">
-                <input type="text" placeholder="搜索好友、页面或小组...">
+                <input type="text" placeholder="搜索好友、页面或小组..." id="searchInput">
+                <div class="search-results" id="searchResults">
+                    <!-- 搜索结果将在这里显示 -->
+                </div>
             </div>
             <div class="nav-icons">
                 <i class="fas fa-home"></i>
@@ -568,7 +773,7 @@
         <!-- 主要内容区域 -->
         <div class="main-content">
             <!-- 左侧边栏 -->
-            <div class="sidebar">
+            <div class="sidebar" id="leftSidebar">
                 <div class="profile-card">
                     <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="个人头像" class="profile-img">
                     <div class="profile-name">李小雨</div>
@@ -590,7 +795,7 @@
             <div class="feed">
                 <div class="create-post">
                     <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="个人头像" class="profile-img" style="width: 50px; height: 50px;">
-                    <div class="post-input">今天有什么新鲜事想分享？</div>
+                    <div class="post-input" id="createPostTrigger">今天有什么新鲜事想分享？</div>
                 </div>
                 
                 <div class="post-actions">
@@ -671,7 +876,7 @@
             </div>
             
             <!-- 右侧边栏 -->
-            <div class="right-sidebar">
+            <div class="right-sidebar" id="rightSidebar">
                 <div class="section-title">生日</div>
                 <div class="birthday-card">
                     <div class="birthday-icon">
@@ -734,21 +939,21 @@
     <!-- 移动端底部导航栏 -->
     <nav class="mobile-nav">
         <div class="mobile-nav-items">
-            <div class="mobile-nav-item active">
+            <div class="mobile-nav-item active" data-target="feed">
                 <i class="fas fa-home"></i>
                 <span>首页</span>
             </div>
-            <div class="mobile-nav-item">
-                <i class="fas fa-users"></i>
-                <span>好友</span>
+            <div class="mobile-nav-item" data-target="leftSidebar">
+                <i class="fas fa-user"></i>
+                <span>个人</span>
             </div>
-            <div class="mobile-nav-item">
-                <i class="fas fa-video"></i>
-                <span>视频</span>
+            <div class="mobile-nav-item" data-target="createPostModal">
+                <i class="fas fa-plus-circle"></i>
+                <span>发布</span>
             </div>
-            <div class="mobile-nav-item">
+            <div class="mobile-nav-item" data-target="rightSidebar">
                 <i class="fas fa-bell"></i>
-                <span>通知</span>
+                <span>动态</span>
             </div>
             <div class="mobile-nav-item">
                 <i class="fas fa-bars"></i>
@@ -756,20 +961,114 @@
             </div>
         </div>
     </nav>
+    
+    <!-- 侧边栏切换按钮 -->
+    <button class="sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
 
     <script>
-        // 添加一些简单的交互效果
+        // 搜索功能
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        
+        // 模拟搜索结果
+        const mockResults = [
+            { name: '张明', type: '好友', avatar: 'https://randomuser.me/api/portraits/men/32.jpg' },
+            { name: '王丽', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
+            { name: '前端开发小组', type: '小组', icon: 'fas fa-users' },
+            { name: '摄影爱好者', type: '页面', icon: 'fas fa-camera' },
+            { name: '周末音乐会', type: '活动', icon: 'fas fa-music' }
+        ];
+        
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            if (query.length === 0) {
+                searchResults.style.display = 'none';
+                return;
+            }
+            
+            // 过滤结果
+            const filteredResults = mockResults.filter(item => 
+                item.name.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            // 显示结果
+            if (filteredResults.length > 0) {
+                searchResults.innerHTML = '';
+                filteredResults.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    
+                    if (result.avatar) {
+                        resultItem.innerHTML = `
+                            <img src="${result.avatar}" alt="${result.name}" style="width: 30px; height: 30px; border-radius: 50%;">
+                            <div>
+                                <div style="font-weight: bold;">${result.name}</div>
+                                <div style="font-size: 12px; color: #777;">${result.type}</div>
+                            </div>
+                        `;
+                    } else {
+                        resultItem.innerHTML = `
+                            <i class="${result.icon}" style="width: 30px; text-align: center;"></i>
+                            <div>
+                                <div style="font-weight: bold;">${result.name}</div>
+                                <div style="font-size: 12px; color: #777;">${result.type}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    resultItem.addEventListener('click', function() {
+                        alert(`你点击了: ${result.name}`);
+                        searchResults.style.display = 'none';
+                        searchInput.value = '';
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.innerHTML = '<div class="search-result-item">没有找到相关结果</div>';
+                searchResults.style.display = 'block';
+            }
+        });
+        
+        // 点击页面其他区域关闭搜索结果
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // 帖子交互功能
         document.querySelectorAll('.post-action-button').forEach(button => {
             button.addEventListener('click', function() {
                 const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
                 if (icon.classList.contains('far')) {
                     icon.classList.remove('far');
                     icon.classList.add('fas');
                     this.style.color = '#6a89cc';
+                    
+                    // 更新点赞/评论/分享数量
+                    if (text.textContent === '赞') {
+                        const stats = this.closest('.post').querySelector('.post-stats div');
+                        const currentLikes = parseInt(stats.textContent) || 0;
+                        stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
+                    }
                 } else {
                     icon.classList.remove('fas');
                     icon.classList.add('far');
                     this.style.color = '';
+                    
+                    // 更新点赞/评论/分享数量
+                    if (text.textContent === '赞') {
+                        const stats = this.closest('.post').querySelector('.post-stats div');
+                        const currentLikes = parseInt(stats.textContent) || 1;
+                        stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
+                    }
                 }
             });
         });
@@ -781,12 +1080,156 @@
                     i.classList.remove('active');
                 });
                 this.classList.add('active');
+                
+                const target = this.getAttribute('data-target');
+                if (target) {
+                    if (target === 'feed') {
+                        // 显示主内容
+                        document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
+                            sidebar.classList.remove('active');
+                        });
+                    } else if (target === 'createPostModal') {
+                        // 打开创建帖子模态框
+                        document.getElementById('createPostModal').style.display = 'flex';
+                    } else {
+                        // 切换侧边栏
+                        document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
+                            sidebar.classList.remove('active');
+                        });
+                        document.getElementById(target).classList.add('active');
+                    }
+                }
             });
         });
         
         // 移动端菜单按钮点击效果
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            alert('移动端菜单功能开发中...');
+            document.getElementById('leftSidebar').classList.toggle('active');
+        });
+        
+        // 侧边栏切换按钮
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('rightSidebar').classList.toggle('active');
+        });
+        
+        // 模态框功能
+        const modal = document.getElementById('createPostModal');
+        const closeModalButtons = document.querySelectorAll('.close-modal');
+        const createPostTrigger = document.getElementById('createPostTrigger');
+        const postForm = document.getElementById('postForm');
+        
+        // 打开模态框
+        createPostTrigger.addEventListener('click', function() {
+            modal.style.display = 'flex';
+        });
+        
+        // 关闭模态框
+        closeModalButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // 表单提交
+        postForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const content = document.getElementById('postContent').value;
+            const imageFile = document.getElementById('postImage').files[0];
+            
+            if (!content.trim()) {
+                alert('请输入帖子内容');
+                return;
+            }
+            
+            // 创建新帖子
+            const newPost = document.createElement('div');
+            newPost.className = 'post';
+            
+            let imageHTML = '';
+            if (imageFile) {
+                const imageUrl = URL.createObjectURL(imageFile);
+                imageHTML = `<img src="${imageUrl}" alt="帖子图片" class="post-image">`;
+            }
+            
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="post-avatar">
+                    <div>
+                        <div class="post-user">李小雨</div>
+                        <div class="post-time">刚刚 · <i class="fas fa-globe-asia"></i></div>
+                    </div>
+                </div>
+                <div class="post-content">${content}</div>
+                ${imageHTML}
+                <div class="post-stats">
+                    <div>0 个赞 · 0 条评论</div>
+                </div>
+                <div class="post-actions-buttons">
+                    <div class="post-action-button">
+                        <i class="far fa-thumbs-up"></i>
+                        <span>赞</span>
+                    </div>
+                    <div class="post-action-button">
+                        <i class="far fa-comment"></i>
+                        <span>评论</span>
+                    </div>
+                    <div class="post-action-button">
+                        <i class="far fa-share-square"></i>
+                        <span>分享</span>
+                    </div>
+                </div>
+            `;
+            
+            // 插入到帖子列表顶部
+            document.querySelector('.feed').insertBefore(newPost, document.querySelector('.feed').children[3]);
+            
+            // 重置表单
+            postForm.reset();
+            
+            // 关闭模态框
+            modal.style.display = 'none';
+            
+            // 添加新帖子的交互功能
+            newPost.querySelectorAll('.post-action-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        this.style.color = '#6a89cc';
+                        
+                        // 更新点赞/评论/分享数量
+                        if (text.textContent === '赞') {
+                            const stats = this.closest('.post').querySelector('.post-stats div');
+                            const currentLikes = parseInt(stats.textContent) || 0;
+                            stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
+                        }
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        this.style.color = '';
+                        
+                        // 更新点赞/评论/分享数量
+                        if (text.textContent === '赞') {
+                            const stats = this.closest('.post').querySelector('.post-stats div');
+                            const currentLikes = parseInt(stats.textContent) || 1;
+                            stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
+                        }
+                    }
+                });
+            });
+            
+            alert('帖子发布成功！');
         });
         
         // 模拟动态加载
@@ -823,6 +1266,38 @@
                 </div>
             `;
             document.querySelector('.feed').insertBefore(newPost, document.querySelector('.feed').children[3]);
+            
+            // 添加新帖子的交互功能
+            newPost.querySelectorAll('.post-action-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    const text = this.querySelector('span');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        this.style.color = '#6a89cc';
+                        
+                        // 更新点赞/评论/分享数量
+                        if (text.textContent === '赞') {
+                            const stats = this.closest('.post').querySelector('.post-stats div');
+                            const currentLikes = parseInt(stats.textContent) || 0;
+                            stats.textContent = `${currentLikes + 1} 个赞 · ${stats.textContent.split('·')[1]}`;
+                        }
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        this.style.color = '';
+                        
+                        // 更新点赞/评论/分享数量
+                        if (text.textContent === '赞') {
+                            const stats = this.closest('.post').querySelector('.post-stats div');
+                            const currentLikes = parseInt(stats.textContent) || 1;
+                            stats.textContent = `${Math.max(0, currentLikes - 1)} 个赞 · ${stats.textContent.split('·')[1]}`;
+                        }
+                    }
+                });
+            });
         }, 3000);
     </script>
 </body>
