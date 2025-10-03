@@ -3,143 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人引导页</title>
+    <title>我的个人导航站</title>
     <style>
-        /* 基础样式 */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --link-color: #0066cc;
+            --link-hover-color: #004499;
+            --border-color: #e0e0e0;
+            --category-bg: #f5f5f5;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --link-color: #4da6ff;
+            --link-hover-color: #80c1ff;
+            --border-color: #404040;
+            --category-bg: #2a2a2a;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
+            color: var(--text-color);
+            background-color: var(--bg-color);
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
-        /* 主要内容区域 */
-        .container {
-            background: white;
-            border-radius: 8px;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            animation: fadeIn 1s ease-out;
+
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
         }
-        
-        /* 标题样式 */
+
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
         }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #7f8c8d;
-            margin-bottom: 30px;
-            font-weight: 300;
-        }
-        
-        /* 段落样式 */
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-        }
-        
-        /* 链接区域 */
-        .links {
-            margin-top: 30px;
-        }
-        
-        .link-item {
-            display: inline-block;
-            margin-right: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .link-item a {
-            text-decoration: none;
-            color: #3498db;
-            padding: 8px 15px;
-            border: 1px solid #3498db;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .link-item a:hover {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        /* 联系信息 */
-        .contact {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        .contact p {
-            margin-bottom: 8px;
+
+        .description {
+            color: #666;
             font-size: 1rem;
         }
-        
-        /* 动画效果 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        [data-theme="dark"] .description {
+            color: #aaa;
         }
-        
-        /* 响应式设计 */
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .category {
+            margin-bottom: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .link-item {
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .link-item:hover {
+            background-color: var(--category-bg);
+        }
+
+        .link-item a {
+            color: var(--link-color);
+            text-decoration: none;
+            display: block;
+        }
+
+        .link-item a:hover {
+            color: var(--link-hover-color);
+        }
+
+        .link-description {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        [data-theme="dark"] .link-description {
+            color: #aaa;
+        }
+
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        [data-theme="dark"] footer {
+            color: #aaa;
+        }
+
         @media (max-width: 600px) {
             body {
-                padding: 10px;
+                padding: 15px;
             }
             
-            .container {
-                padding: 25px;
+            .links {
+                grid-template-columns: 1fr;
             }
             
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1rem;
+            .theme-toggle {
+                position: static;
+                margin-bottom: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>您的姓名</h1>
-        <p class="subtitle">职位/专业领域 · 简短描述</p>
+    <button class="theme-toggle" id="themeToggle">切换深色模式</button>
+    
+    <header>
+        <h1>我的个人导航站</h1>
+        <p class="description">常用链接与资源的集合</p>
+    </header>
+    
+    <main>
+        <section class="category">
+            <h2 class="category-title">开发工具</h2>
+            <div class="links">
+                <div class="link-item">
+                    <a href="https://github.com" target="_blank">GitHub</a>
+                    <div class="link-description">代码托管与协作平台</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://stackoverflow.com" target="_blank">Stack Overflow</a>
+                    <div class="link-description">开发者问答社区</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a>
+                    <div class="link-description">Web技术文档</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://codepen.io" target="_blank">CodePen</a>
+                    <div class="link-description">前端代码实验平台</div>
+                </div>
+            </div>
+        </section>
         
-        <p>欢迎访问我的个人页面。我是一名专注于[您的专业领域]的[您的职业]。我热衷于[您的兴趣或专长领域]，并致力于[您的目标或使命]。</p>
+        <section class="category">
+            <h2 class="category-title">学习资源</h2>
+            <div class="links">
+                <div class="link-item">
+                    <a href="https://freecodecamp.org" target="_blank">freeCodeCamp</a>
+                    <div class="link-description">免费编程学习平台</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://css-tricks.com" target="_blank">CSS-Tricks</a>
+                    <div class="link-description">CSS技巧与教程</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://dev.to" target="_blank">DEV Community</a>
+                    <div class="link-description">开发者社区与博客</div>
+                </div>
+            </div>
+        </section>
         
-        <p>在这里，您可以找到我的作品、文章以及联系方式。如果您对我的工作感兴趣，欢迎与我取得联系。</p>
+        <section class="category">
+            <h2 class="category-title">实用工具</h2>
+            <div class="links">
+                <div class="link-item">
+                    <a href="https://regexr.com" target="_blank">RegExr</a>
+                    <div class="link-description">正则表达式测试工具</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://jsonformatter.org" target="_blank">JSON Formatter</a>
+                    <div class="link-description">JSON格式化与验证</div>
+                </div>
+                <div class="link-item">
+                    <a href="https://figma.com" target="_blank">Figma</a>
+                    <div class="link-description">界面设计与原型工具</div>
+                </div>
+            </div>
+        </section>
         
-        <div class="links">
-            <div class="link-item"><a href="#projects">我的项目</a></div>
-            <div class="link-item"><a href="#blog">博客/文章</a></div>
-            <div class="link-item"><a href="#about">关于我</a></div>
-            <div class="link-item"><a href="#contact">联系方式</a></div>
-        </div>
+        <section class="category">
+            <h2 class="category-title">个人项目</h2>
+            <div class="links">
+                <div class="link-item">
+                    <a href="/project1">项目一</a>
+                    <div class="link-description">我的第一个项目</div>
+                </div>
+                <div class="link-item">
+                    <a href="/project2">项目二</a>
+                    <div class="link-description">React应用示例</div>
+                </div>
+                <div class="link-item">
+                    <a href="/blog">个人博客</a>
+                    <div class="link-description">技术思考与分享</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>© 2023 我的个人导航站 | 使用 GitHub Pages 部署</p>
+    </footer>
+
+    <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
         
-        <div class="contact">
-            <p>邮箱: your.email@example.com</p>
-            <p>GitHub: github.com/yourusername</p>
-            <p>Twitter: @yourusername</p>
-            <!-- 可根据需要添加更多联系方式 -->
-        </div>
-    </div>
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
+        // 更新按钮文本
+        function updateButtonText() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            themeToggle.textContent = currentTheme === 'light' ? '切换深色模式' : '切换浅色模式';
+        }
+        
+        themeToggle.addEventListener('click', updateButtonText);
+        updateButtonText();
+    </script>
 </body>
 </html>
