@@ -162,19 +162,19 @@
             <h2 class="category-title">开发工具</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">官方卡网</a>
                     <div class="link-description">代码托管与协作平台</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://stackoverflow.com/" target="_blank" rel="noopener noreferrer">Stack Overflow</a>
+                    <a href="https://t.me/Facebookkf_bot">官方客服</a>
                     <div class="link-description">开发者问答社区</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://developer.mozilla.org/" target="_blank" rel="noopener noreferrer">MDN Web Docs</a>
+                    <a href="https://t.me/fb180">官方群组</a>
                     <div class="link-description">Web技术文档</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://codepen.io/" target="_blank" rel="noopener noreferrer">CodePen</a>
+                    <a href="https://www.facebook.com/">脸书官网</a>
                     <div class="link-description">前端代码实验平台</div>
                 </div>
             </div>
@@ -184,15 +184,15 @@
             <h2 class="category-title">学习资源</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">freeCodeCamp</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">freeCodeCamp</a>
                     <div class="link-description">免费编程学习平台</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://css-tricks.com/" target="_blank" rel="noopener noreferrer">CSS-Tricks</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">CSS-Tricks</a>
                     <div class="link-description">CSS技巧与教程</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://dev.to/" target="_blank" rel="noopener noreferrer">DEV Community</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">DEV Community</a>
                     <div class="link-description">开发者社区与博客</div>
                 </div>
             </div>
@@ -202,15 +202,15 @@
             <h2 class="category-title">实用工具</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://regexr.com/" target="_blank" rel="noopener noreferrer">RegExr</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">RegExr</a>
                     <div class="link-description">正则表达式测试工具</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://jsonformatter.org/" target="_blank" rel="noopener noreferrer">JSON Formatter</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">JSON Formatter</a>
                     <div class="link-description">JSON格式化与验证</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer">Figma</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">Figma</a>
                     <div class="link-description">界面设计与原型工具</div>
                 </div>
             </div>
@@ -220,15 +220,15 @@
             <h2 class="category-title">个人项目</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://github.com/yourusername/project1" target="_blank" rel="noopener noreferrer">项目一</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">项目一</a>
                     <div class="link-description">我的第一个项目</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://github.com/yourusername/project2" target="_blank" rel="noopener noreferrer">项目二</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">项目二</a>
                     <div class="link-description">React应用示例</div>
                 </div>
                 <div class="link-item">
-                    <a href="https://yourblog.com" target="_blank" rel="noopener noreferrer">个人博客</a>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">个人博客</a>
                     <div class="link-description">技术思考与分享</div>
                 </div>
             </div>
@@ -252,7 +252,6 @@
             
             document.documentElement.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
-            updateButtonText();
         });
         
         // 更新按钮文本
@@ -261,6 +260,7 @@
             themeToggle.textContent = currentTheme === 'light' ? '切换深色模式' : '切换浅色模式';
         }
         
+        themeToggle.addEventListener('click', updateButtonText);
         updateButtonText();
     </script>
 </body>
