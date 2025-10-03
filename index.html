@@ -94,6 +94,8 @@
             padding: 10px;
             border-radius: 4px;
             transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
         }
 
         .link-item:hover {
@@ -103,11 +105,27 @@
         .link-item a {
             color: var(--link-color);
             text-decoration: none;
-            display: block;
+            display: flex;
+            align-items: center;
+            width: 100%;
         }
 
         .link-item a:hover {
             color: var(--link-hover-color);
+        }
+
+        .link-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .link-content {
+            flex: 1;
         }
 
         .link-description {
@@ -162,20 +180,40 @@
             <h2 class="category-title">官方服务</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">官方卡网</a>
-                    <div class="link-description">购买脸书白号官方平台</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">🛒</div>
+                        <div class="link-content">
+                            <div>官方卡网</div>
+                            <div class="link-description">购买脸书白号官方平台</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://t.me/Facebookkf_bot">官方客服</a>
-                    <div class="link-description">Telegram客服机器人</div>
+                    <a href="https://t.me/Facebookkf_bot">
+                        <div class="link-icon">🤖</div>
+                        <div class="link-content">
+                            <div>官方客服</div>
+                            <div class="link-description">Telegram客服机器人</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://t.me/fb180">官方群组</a>
-                    <div class="link-description">Telegram官方交流群组</div>
+                    <a href="https://t.me/fb180">
+                        <div class="link-icon">👥</div>
+                        <div class="link-content">
+                            <div>官方群组</div>
+                            <div class="link-description">Telegram官方交流群组</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://www.facebook.com/">脸书官网</a>
-                    <div class="link-description">Facebook官方网站</div>
+                    <a href="https://www.facebook.com/">
+                        <div class="link-icon">🌐</div>
+                        <div class="link-content">
+                            <div>脸书官网</div>
+                            <div class="link-description">Facebook官方网站</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -184,16 +222,31 @@
             <h2 class="category-title">学习资源</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">freeCodeCamp</a>
-                    <div class="link-description">免费编程学习平台</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">💻</div>
+                        <div class="link-content">
+                            <div>freeCodeCamp</div>
+                            <div class="link-description">免费编程学习平台</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">CSS-Tricks</a>
-                    <div class="link-description">CSS技巧与教程</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">🎨</div>
+                        <div class="link-content">
+                            <div>CSS-Tricks</div>
+                            <div class="link-description">CSS技巧与教程</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">DEV Community</a>
-                    <div class="link-description">开发者社区与博客</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">📝</div>
+                        <div class="link-content">
+                            <div>DEV Community</div>
+                            <div class="link-description">开发者社区与博客</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -202,16 +255,31 @@
             <h2 class="category-title">实用工具</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">RegExr</a>
-                    <div class="link-description">正则表达式测试工具</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">🔍</div>
+                        <div class="link-content">
+                            <div>RegExr</div>
+                            <div class="link-description">正则表达式测试工具</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">JSON Formatter</a>
-                    <div class="link-description">JSON格式化与验证</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">📊</div>
+                        <div class="link-content">
+                            <div>JSON Formatter</div>
+                            <div class="link-description">JSON格式化与验证</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">Figma</a>
-                    <div class="link-description">界面设计与原型工具</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">✏️</div>
+                        <div class="link-content">
+                            <div>Figma</div>
+                            <div class="link-description">界面设计与原型工具</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -220,16 +288,31 @@
             <h2 class="category-title">个人项目</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">项目一</a>
-                    <div class="link-description">我的第一个项目</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">🚀</div>
+                        <div class="link-content">
+                            <div>项目一</div>
+                            <div class="link-description">我的第一个项目</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">项目二</a>
-                    <div class="link-description">React应用示例</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">⚛️</div>
+                        <div class="link-content">
+                            <div>项目二</div>
+                            <div class="link-description">React应用示例</div>
+                        </div>
+                    </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">个人博客</a>
-                    <div class="link-description">技术思考与分享</div>
+                    <a href="https://fh10.zmfaka.cn/shop/24XZCD9E">
+                        <div class="link-icon">📚</div>
+                        <div class="link-content">
+                            <div>个人博客</div>
+                            <div class="link-description">技术思考与分享</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
