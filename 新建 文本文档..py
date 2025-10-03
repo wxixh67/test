@@ -15,7 +15,7 @@ def generate_image_list():
     
     # 只获取文件名并排序
     image_files = [os.path.basename(f) for f in image_files]
-    image_files.sort()  # 按文件名排序
+    image_files.sort(reverse=True)  # 反向排序
     
     # 生成格式化的输出
     output = []
