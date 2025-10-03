@@ -598,6 +598,7 @@
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
+            position: relative;
         }
         
         .modal-header {
@@ -618,6 +619,21 @@
             font-size: 24px;
             cursor: pointer;
             color: #777;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            background: #f8f9fa;
+            color: #333;
         }
         
         .form-group {
@@ -1147,11 +1163,11 @@
             { name: '王丽', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/68.jpg' },
             { name: '前端开发小组', type: '小组', icon: 'fas fa-users' },
             { name: '摄影爱好者', type: '页面', icon: 'fas fa-camera' },
-            { name: '周末音乐会', type: '活动', icon: 'fas fa-music' }
+            { name: '李小雨', type: '好友', avatar: 'https://randomuser.me/api/portraits/women/44.jpg' }
         ];
         
         searchInput.addEventListener('input', function() {
-            const query = this.value.trim();
+            const query = this.value.toLowerCase();
             
             if (query.length === 0) {
                 searchResults.style.display = 'none';
@@ -1160,7 +1176,7 @@
             
             // 过滤结果
             const filteredResults = mockResults.filter(item => 
-                item.name.toLowerCase().includes(query.toLowerCase())
+                item.name.toLowerCase().includes(query)
             );
             
             // 显示结果
@@ -1188,11 +1204,6 @@
                         `;
                     }
                     
-                    resultItem.addEventListener('click', function() {
-                        searchInput.value = result.name;
-                        searchResults.style.display = 'none';
-                    });
-                    
                     searchResults.appendChild(resultItem);
                 });
                 searchResults.style.display = 'block';
@@ -1201,7 +1212,7 @@
             }
         });
         
-        // 点击页面其他地方隐藏搜索结果
+        // 点击其他地方隐藏搜索结果
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.style.display = 'none';
@@ -1209,128 +1220,76 @@
         });
         
         // 模态框功能
+        const modal = document.getElementById('createPostModal');
         const createPostTrigger = document.getElementById('createPostTrigger');
-        const createPostModal = document.getElementById('createPostModal');
         const closeModalButtons = document.querySelectorAll('.close-modal');
-        const postForm = document.getElementById('postForm');
         
+        // 打开模态框
         createPostTrigger.addEventListener('click', function() {
-            createPostModal.style.display = 'flex';
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
         });
         
+        // 关闭模态框
         closeModalButtons.forEach(button => {
             button.addEventListener('click', function() {
-                createPostModal.style.display = 'none';
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
             });
         });
         
+        // 点击模态框外部关闭
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // ESC键关闭模态框
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 表单提交
+        const postForm = document.getElementById('postForm');
         postForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const content = document.getElementById('postContent').value;
-            // 这里可以添加发布帖子的逻辑
-            alert('帖子发布成功！');
-            createPostModal.style.display = 'none';
-            // 清空表单
-            document.getElementById('postContent').value = '';
-            document.getElementById('postImage').value = '';
+            if (content.trim() !== '') {
+                alert('帖子发布成功！');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                postForm.reset();
+            } else {
+                alert('请填写帖子内容！');
+            }
         });
         
-        // 移动端导航功能
-        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
-        
-        mobileNavItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // 移除所有active类
-                mobileNavItems.forEach(i => i.classList.remove('active'));
-                // 添加active类到当前项
-                this.classList.add('active');
-                
-                const target = this.getAttribute('data-target');
-                
-                if (target === 'feed') {
-                    // 显示主内容
-                    document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
-                        sidebar.classList.remove('active');
-                    });
-                } else if (target === 'createPostModal') {
-                    // 打开创建帖子模态框
-                    createPostModal.style.display = 'flex';
-                } else {
-                    // 显示对应的侧边栏
-                    document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
-                        sidebar.classList.remove('active');
-                    });
-                    document.getElementById(target).classList.add('active');
-                }
-            });
-        });
-        
-        // 移动端菜单按钮
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const leftSidebar = document.getElementById('leftSidebar');
-        
-        mobileMenuBtn.addEventListener('click', function() {
-            leftSidebar.classList.toggle('active');
-        });
-        
-        // 侧边栏切换按钮
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        
-        sidebarToggle.addEventListener('click', function() {
-            leftSidebar.classList.toggle('active');
-        });
-        
-        // 点赞功能
-        const likeButtons = document.querySelectorAll('.like-btn');
-        
-        likeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas');
-                    this.style.color = '#6a89cc';
-                } else {
-                    icon.classList.remove('fas');
-                    icon.classList.add('far');
-                    this.style.color = '';
-                }
-            });
-        });
-        
-        // 评论显示/隐藏功能
+        // 评论功能
         const commentButtons = document.querySelectorAll('.comment-btn');
+        const commentInputs = document.querySelectorAll('.comment-input');
+        const commentSubmits = document.querySelectorAll('.comment-submit');
         
         commentButtons.forEach(button => {
             button.addEventListener('click', function() {
-                const post = this.closest('.post');
-                const postId = post.getAttribute('data-post-id');
+                const postId = this.closest('.post').getAttribute('data-post-id');
                 const commentsSection = document.getElementById(`comments-${postId}`);
-                
-                // 切换评论区域的显示状态
                 commentsSection.classList.toggle('active');
-                
-                // 如果评论区域显示，则聚焦到评论输入框
-                if (commentsSection.classList.contains('active')) {
-                    const commentInput = commentsSection.querySelector('.comment-input');
-                    setTimeout(() => {
-                        commentInput.focus();
-                    }, 100);
-                }
             });
         });
         
-        // 添加评论功能
-        const commentSubmitButtons = document.querySelectorAll('.comment-submit');
-        
-        commentSubmitButtons.forEach(button => {
+        commentSubmits.forEach((button, index) => {
             button.addEventListener('click', function() {
-                const commentsSection = this.closest('.comments-section');
-                const commentInput = commentsSection.querySelector('.comment-input');
-                const commentText = commentInput.value.trim();
+                const input = commentInputs[index];
+                const postId = input.getAttribute('data-post-id');
                 
-                if (commentText) {
-                    // 创建新评论
+                if (input.value.trim() !== '') {
+                    const commentsSection = document.getElementById(`comments-${postId}`);
+                    
                     const newComment = document.createElement('div');
                     newComment.className = 'comment';
                     newComment.innerHTML = `
@@ -1340,7 +1299,7 @@
                                 <div class="comment-user">李小雨</div>
                                 <div class="comment-time">刚刚</div>
                             </div>
-                            <div class="comment-text">${commentText}</div>
+                            <div class="comment-text">${input.value}</div>
                             <div class="comment-actions">
                                 <span class="comment-action">赞</span>
                                 <span class="comment-action">回复</span>
@@ -1348,52 +1307,132 @@
                         </div>
                     `;
                     
-                    // 在"添加评论"区域之前插入新评论
-                    const addCommentSection = commentsSection.querySelector('.add-comment');
-                    commentsSection.insertBefore(newComment, addCommentSection);
+                    const addComment = commentsSection.querySelector('.add-comment');
+                    commentsSection.insertBefore(newComment, addComment);
                     
-                    // 清空输入框
-                    commentInput.value = '';
+                    input.value = '';
                     
-                    // 更新评论数量
-                    const post = commentsSection.closest('.post');
-                    const postStats = post.querySelector('.post-stats div');
-                    const currentStats = postStats.textContent;
-                    const commentCountMatch = currentStats.match(/(\d+) 条评论/);
-                    
-                    if (commentCountMatch) {
-                        const newCount = parseInt(commentCountMatch[1]) + 1;
-                        postStats.textContent = currentStats.replace(/(\d+) 条评论/, `${newCount} 条评论`);
-                    }
+                    // 更新帖子统计
+                    const postStats = document.querySelector(`.post[data-post-id="${postId}"] .post-stats div`);
+                    const currentComments = parseInt(postStats.textContent.match(/\d+/g)[1]);
+                    postStats.textContent = postStats.textContent.replace(/\d+ 条评论/, `${currentComments + 1} 条评论`);
                 }
             });
         });
         
-        // 按Enter键提交评论
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
-                // 检查是否同时按下了Ctrl或Cmd键
-                if (e.ctrlKey || e.metaKey) {
-                    // 插入换行
-                    const start = e.target.selectionStart;
-                    const end = e.target.selectionEnd;
-                    e.target.value = e.target.value.substring(0, start) + '\n' + e.target.value.substring(end);
-                    e.target.selectionStart = e.target.selectionEnd = start + 1;
+        // 点赞功能
+        const likeButtons = document.querySelectorAll('.like-btn');
+        
+        likeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const text = this.querySelector('span');
+                
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    text.textContent = '已赞';
+                    this.style.color = '#6a89cc';
+                    
+                    // 更新帖子统计
+                    const postStats = this.closest('.post').querySelector('.post-stats div');
+                    const currentLikes = parseInt(postStats.textContent.match(/\d+/g)[0]);
+                    postStats.textContent = postStats.textContent.replace(/\d+ 个赞/, `${currentLikes + 1} 个赞`);
                 } else {
-                    // 提交评论
-                    e.preventDefault();
-                    e.target.closest('.add-comment').querySelector('.comment-submit').click();
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    text.textContent = '赞';
+                    this.style.color = '';
+                    
+                    // 更新帖子统计
+                    const postStats = this.closest('.post').querySelector('.post-stats div');
+                    const currentLikes = parseInt(postStats.textContent.match(/\d+/g)[0]);
+                    postStats.textContent = postStats.textContent.replace(/\d+ 个赞/, `${currentLikes - 1} 个赞`);
                 }
+            });
+        });
+        
+        // 移动端导航
+        const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        const leftSidebar = document.getElementById('leftSidebar');
+        const rightSidebar = document.getElementById('rightSidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        
+        mobileNavItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                
+                // 移除所有活动状态
+                mobileNavItems.forEach(navItem => {
+                    navItem.classList.remove('active');
+                });
+                
+                // 添加当前活动状态
+                this.classList.add('active');
+                
+                // 处理不同目标
+                if (target === 'feed') {
+                    leftSidebar.classList.remove('active');
+                    rightSidebar.classList.remove('active');
+                } else if (target === 'leftSidebar') {
+                    leftSidebar.classList.add('active');
+                    rightSidebar.classList.remove('active');
+                } else if (target === 'rightSidebar') {
+                    rightSidebar.classList.add('active');
+                    leftSidebar.classList.remove('active');
+                } else if (target === 'createPostModal') {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+        
+        // 侧边栏切换按钮
+        let currentSidebar = 'left';
+        
+        sidebarToggle.addEventListener('click', function() {
+            if (currentSidebar === 'left') {
+                leftSidebar.classList.toggle('active');
+                rightSidebar.classList.remove('active');
+                currentSidebar = 'left';
+            } else {
+                rightSidebar.classList.toggle('active');
+                leftSidebar.classList.remove('active');
+                currentSidebar = 'right';
             }
         });
         
-        // 响应式调整
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 992) {
-                document.querySelectorAll('.sidebar, .right-sidebar').forEach(sidebar => {
-                    sidebar.classList.remove('active');
-                });
+        // 移动端菜单按钮
+        mobileMenuBtn.addEventListener('click', function() {
+            leftSidebar.classList.toggle('active');
+        });
+        
+        // 点击侧边栏外部关闭侧边栏
+        document.addEventListener('click', function(e) {
+            if (leftSidebar.classList.contains('active') && 
+                !leftSidebar.contains(e.target) && 
+                !mobileMenuBtn.contains(e.target) &&
+                !sidebarToggle.contains(e.target)) {
+                leftSidebar.classList.remove('active');
             }
+            
+            if (rightSidebar.classList.contains('active') && 
+                !rightSidebar.contains(e.target) && 
+                !sidebarToggle.contains(e.target)) {
+                rightSidebar.classList.remove('active');
+            }
+        });
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 随机生成一些点赞数
+            const postStats = document.querySelectorAll('.post-stats div');
+            postStats.forEach(stat => {
+                const likes = Math.floor(Math.random() * 100) + 20;
+                const comments = Math.floor(Math.random() * 20) + 5;
+                stat.textContent = `${likes} 个赞 · ${comments} 条评论`;
+            });
         });
     </script>
 </body>
