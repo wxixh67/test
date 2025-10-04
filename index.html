@@ -1,413 +1,201 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>经典导航页</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #15202b;
-            color: #ffffff;
-            line-height: 1.6;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #38444d;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .logo i {
-            color: #1da1f2;
-            font-size: 28px;
-        }
-        
-        .logo h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: #192734;
-            border-radius: 30px;
-            padding: 8px 15px;
-            width: 300px;
-        }
-        
-        .search-box i {
-            color: #657786;
-            margin-right: 10px;
-        }
-        
-        .search-box input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: white;
-            width: 100%;
-            font-size: 15px;
-        }
-        
-        .search-box input::placeholder {
-            color: #657786;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .category-card {
-            background: #192734;
-            border-radius: 16px;
-            padding: 20px;
-            transition: transform 0.2s;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-            background: #1c2732;
-        }
-        
-        .category-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #38444d;
-        }
-        
-        .category-header i {
-            font-size: 20px;
-            margin-right: 10px;
-            color: #1da1f2;
-        }
-        
-        .category-header h2 {
-            font-size: 18px;
-            font-weight: 700;
-        }
-        
-        .links {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .link-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 10px;
-            border-radius: 8px;
-            transition: background 0.2s;
-            text-decoration: none;
-            color: #e7e9ea;
-        }
-        
-        .link-item:hover {
-            background: #1c2732;
-        }
-        
-        .link-item i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-            color: #1da1f2;
-        }
-        
-        .quick-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #1da1f2;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .action-btn:hover {
-            background: #1a91da;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #38444d;
-            color: #657786;
-            font-size: 14px;
-        }
-        
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
-            
-            .quick-actions {
-                flex-wrap: wrap;
-            }
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Blueokanna's Blog">
+    <meta name="author" content="Blueokanna">
+    <meta name="keywords" content="blog, Blueokanna, web development">
+    <title>Blue's Blog</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/2593/2593542.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fab fa-twitter"></i>
-                <h1>经典导航</h1>
+    <header>
+        <div class="header-shows">
+            <div class="header-img" id="BlueLogo" onclick="navigateToLink('https://blueokanna.gay')">
             </div>
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="搜索网站或内容...">
-            </div>
-        </header>
-        
-        <div class="main-content">
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-globe"></i>
-                    <h2>常用网站</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fab fa-google"></i>
-                        <span>Google</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-stack-overflow"></i>
-                        <span>Stack Overflow</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-newspaper"></i>
-                    <h2>新闻资讯</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fas fa-newspaper"></i>
-                        <span>BBC News</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-newspaper"></i>
-                        <span>Reuters</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-newspaper"></i>
-                        <span>The Guardian</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-newspaper"></i>
-                        <span>TechCrunch</span>
-                    </a>
+            <div class="nav-menu nav-menu-center">Blue's PulseLink Blog</div>
+        </div>
+        <div class="nav-button">
+            <nav>
+                <ul class="nav-menu nav-menu-left-home">
+                    <li><a href="https://blueokanna.gay" onclick="navigateToLink('https://blueokanna.gay')"><i
+                                class="fas fa-home"></i> Home</a></li>
+                </ul>
+
+                <ul class="nav-menu nav-menu-right-github">
+                    <li>
+                        <a href="https://github.com/blueokanna">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div id="portfolio" class="card-container">
+        <div class="flex-container">
+            <div class="left-column">
+                <div class="flex-holder">
+                    <div class="col text-col aos-init aos-animate" data-aos="fade-up">
+                        <div class="content-holder">
+                            <div class="title-holder">
+                                <div class="top-image-holder">
+                                    <img class="profile_pic" src="https://avatars.githubusercontent.com/u/56761243?v=4">
+                                    <h1> Blueokanna </h1>
+                                </div>
+                                <h1 class="profile_name" style="color: rgba(255, 255, 255, 0.75); ">Bio about me:</h1>
+                            </div>
+                            <div class="left-box-text-holder">
+                                <p> As a passionate Java backend engineer, I have been focusing on the tech field for
+                                    many years, conducting in-depth research and practice in Java development.
+                                    My blog will share my technical insights, including Java fundamentals, framework
+                                    applications, and performance optimization.
+                                </p>
+                                <p>
+                                    I engage in learning and exchange with you, working together to
+                                    progress.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-code"></i>
-                    <h2>开发工具</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fab fa-codepen"></i>
-                        <span>CodePen</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-js-square"></i>
-                        <span>MDN Web Docs</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-stack-exchange"></i>
-                        <span>Stack Exchange</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-terminal"></i>
-                        <span>Codecademy</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-palette"></i>
-                    <h2>设计资源</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fab fa-dribbble"></i>
-                        <span>Dribbble</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-behance"></i>
-                        <span>Behance</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-palette"></i>
-                        <span>Adobe Color</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-images"></i>
-                        <span>Unsplash</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-shopping-bag"></i>
-                    <h2>购物娱乐</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fab fa-amazon"></i>
-                        <span>Amazon</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-spotify"></i>
-                        <span>Spotify</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-netflix"></i>
-                        <span>Netflix</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-steam"></i>
-                        <span>Steam</span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="category-card">
-                <div class="category-header">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h2>学习平台</h2>
-                </div>
-                <div class="links">
-                    <a href="#" class="link-item">
-                        <i class="fab fa-coursera"></i>
-                        <span>Coursera</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fab fa-udemy"></i>
-                        <span>Udemy</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-book"></i>
-                        <span>Khan Academy</span>
-                    </a>
-                    <a href="#" class="link-item">
-                        <i class="fas fa-graduation-cap"></i>
-                        <span>edX</span>
-                    </a>
+            <div style="padding: 8px;"></div>
+            <div class="right-column">
+                <div class="col gallery-col">
+                    <div class="col-inner-holder aos-init aos-animate" data-aos="fade-up" data-aos-delay="250">
+                        <div class="text-holder">
+                            <h1 style="color: rgba(255, 255, 255, 0.6);">GitHub Project:</h1>
+                            <ul id="project-list">
+                            </ul>
+                            <ul id="project-list-org">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="quick-actions">
-            <button class="action-btn">
-                <i class="fas fa-plus"></i>
-                <span>添加网站</span>
-            </button>
-            <button class="action-btn">
-                <i class="fas fa-cog"></i>
-                <span>设置</span>
-            </button>
-            <button class="action-btn">
-                <i class="fas fa-share-alt"></i>
-                <span>分享</span>
-            </button>
-        </div>
-        
-        <footer>
-            <p>© 2023 经典导航页 | 灵感来自Twitter设计风格</p>
-        </footer>
     </div>
 
+    <footer class="footer">
+        <div class="inner-footer-contain">
+            <p>&copy; 2023 Blueokanna Copyright</p>
+        </div>
+    </footer>
+
     <script>
-        // 简单的搜索功能
-        document.querySelector('.search-box input').addEventListener('input', function(e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const linkItems = document.querySelectorAll('.link-item');
-            
-            linkItems.forEach(item => {
-                const text = item.textContent.toLowerCase();
-                if (text.includes(searchTerm)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
+        const images = document.querySelectorAll(".image-container img");
+        let counter = 1;
+
+        window.addEventListener("scroll", () => {
+            const scrollPosition = window.scrollY;
+            const blurValue = (scrollPosition / 100).toFixed(1);
+            document.body.style.backdropFilter = `blur(${blurValue}px)`;
+
+            images.forEach((img, index) => {
+                const imageTop = img.getBoundingClientRect().top;
+                if (imageTop < window.innerHeight) {
+                    img.style.display = "block";
                 }
             });
         });
-        
-        // 添加网站按钮功能
-        document.querySelectorAll('.action-btn')[0].addEventListener('click', function() {
-            const url = prompt('请输入网站URL:');
-            const name = prompt('请输入网站名称:');
-            
-            if (url && name) {
-                const firstCategory = document.querySelector('.category-card .links');
-                const newLink = document.createElement('a');
-                newLink.href = url;
-                newLink.className = 'link-item';
-                newLink.innerHTML = `<i class="fas fa-link"></i><span>${name}</span>`;
-                firstCategory.appendChild(newLink);
-            }
+
+        function navigateToLink(url) {
+            window.location.href = url;
+        }
+
+// 获取用户仓库数据
+fetch('https://api.github.com/users/blueokanna/repos')
+    .then(response => response.json())
+    .then(data => {
+        const projectList = document.getElementById('project-list');
+
+        data.forEach(project => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+
+            link.href = project.html_url;
+            link.textContent = project.name;
+
+            const languageSpan = document.createElement('span');
+
+            fetch(project.languages_url)
+                .then(response => response.json())
+                .then(languagesData => {
+                    const languages = Object.keys(languagesData);
+                    if (languages.length > 0) {
+                        languageSpan.textContent = ` (${languages.join(', ')})`;
+                    }
+
+                    const counterSpan = document.createElement('span');
+                    counterSpan.textContent = `${counter}. `;
+                    counterSpan.style.marginRight = '12px';
+                    counterSpan.style.color = 'wheat';
+                    counterSpan.style.fontWeight = 'bold';
+                    languageSpan.style.color = 'white';
+                    languageSpan.style.fontWeight = 'bold';
+
+                    listItem.appendChild(counterSpan);
+                    listItem.appendChild(link);
+                    listItem.appendChild(languageSpan);
+                    projectList.appendChild(listItem);
+                    counter++;
+                })
+                .catch(error => console.error('Error fetching languages data: ' + error));
         });
+    })
+    .catch(error => console.error('Error fetching GitHub data for user: ' + error));
+
+fetch('https://api.github.com/orgs/AstralQuanta/repos')
+    .then(response => response.json())
+    .then(data => {
+        const projectListOrg = document.getElementById('project-list-org');
+
+        data.forEach(project => {
+            const listItem = document.createElement('li');
+            const link = document.createElement('a');
+
+            link.href = project.html_url;
+            link.textContent = project.name;
+
+            const languageSpan = document.createElement('span');
+
+            fetch(project.languages_url)
+                .then(response => response.json())
+                .then(languagesData => {
+                    const languages = Object.keys(languagesData);
+                    if (languages.length > 0) {
+                        languageSpan.textContent = ` (${languages.join(', ')})`;
+                    }
+
+                    const counterSpan = document.createElement('span');
+                    counterSpan.textContent = `${counter}. `;
+                    counterSpan.style.marginRight = '12px';
+                    counterSpan.style.color = 'wheat';
+                    counterSpan.style.fontWeight = 'bold';
+                    languageSpan.style.color = 'white';
+                    languageSpan.style.fontWeight = 'bold';
+
+                    listItem.appendChild(counterSpan);
+                    listItem.appendChild(link);
+                    listItem.appendChild(languageSpan);
+                    projectListOrg.appendChild(listItem);
+                    counter++;
+                })
+                .catch(error => console.error('Error fetching languages data: ' + error));
+        });
+    })
+    .catch(error => console.error('Error fetching GitHub data for organization: ' + error));
+
+
     </script>
 </body>
+
 </html>
