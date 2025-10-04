@@ -19,35 +19,29 @@ function renderNavLinks() {
     // 清空容器
     navContainer.innerHTML = '';
 
-    // 读取JSON数据
-    fetch('data/url.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('网络响应不正常');
-            }
-            return response.json();
-        })
-        .then(links => {
-            // 遍历数据并创建链接元素
-            links.forEach(link => {
-                const aElement = document.createElement('a');
-                aElement.href = link.href;
-                
-                const buttonElement = document.createElement('button');
-                buttonElement.className = 'glass-button';
-                buttonElement.textContent = link.text;
-                
-                aElement.appendChild(buttonElement);
-                const brElement = document.createElement('br');
-                
-                navContainer.appendChild(aElement);
-                navContainer.appendChild(brElement);
-            });
-        })
-        .catch(error => {
-            console.error('加载导航链接失败:', error);
-            navContainer.innerHTML = '<p>导航链接加载失败</p>';
-        });
+    // 定义导航链接数据
+    const links = [
+        { href: 'https://www.example1.com', text: '链接1' },
+        { href: 'https://www.example2.com', text: '链接2' },
+        { href: 'https://www.example3.com', text: '链接3' },
+        // 可以继续添加更多链接
+    ];
+
+    // 遍历数据并创建链接元素
+    links.forEach(link => {
+        const aElement = document.createElement('a');
+        aElement.href = link.href;
+        
+        const buttonElement = document.createElement('button');
+        buttonElement.className = 'glass-button';
+        buttonElement.textContent = link.text;
+        
+        aElement.appendChild(buttonElement);
+        const brElement = document.createElement('br');
+        
+        navContainer.appendChild(aElement);
+        navContainer.appendChild(brElement);
+    });
 }
 
 // 数据速度模拟
