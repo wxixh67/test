@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FB</title>
+    <title>Facebook</title>
     <style>
         * {
             margin: 0;
@@ -58,6 +58,15 @@
             margin-bottom: 40px;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             color: #f5e9d7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .name i {
+            font-size: 28px;
+            color: #1877F2; /* Facebook蓝色官方认证色 */
         }
         
         .nav-container {
@@ -140,7 +149,8 @@
             <img src="头像/1960050.jpg" alt="头像" class="avatar">
         </div>
         
-        <h1 class="name">FB</h1>
+        <!-- 标题左边换成官方认证徽章 -->
+        <h1 class="name"><i class="fas fa-circle-check"></i> Facebook</h1>
         
         <div class="nav-container">
             <a href="https://fh10.zmfaka.cn/shop/24XZCD9E" class="nav-button">
