@@ -1,18 +1,30 @@
-![1](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/1.png)
-![2](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/2.png)
-![3](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/3.png)
-![4](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/4.png)
-![5](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/5.png)
-![6](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/6.png)
-![7](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/7.png)
-![8](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/8.png)
-![9](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/9.png)
-![10](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/10.png)
-![11](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/11.png)
-![12](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/12.png)
-![13](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/13.png)
-![14](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/14.png)
-![15](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/15.png)
-![16](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/16.png)
-![17](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/17.png)
-![18](https://raw.githubusercontent.com/yinchengnuo/webPages/master/md/18.png)
+# 个人导航站
+
+一个简洁美观的个人网址导航站，支持分类管理、搜索和本地存储。
+
+## 功能特性
+
+- 🎨 现代化美观的界面设计
+- 📱 完全响应式布局
+- 🔍 实时搜索功能
+- 🗂️ 分类管理
+- 💾 本地数据存储
+- ➕ 便捷的链接添加
+- 🎯 一键访问常用网站
+
+## 使用方法
+
+1. 直接打开 `index.html` 即可使用
+2. 点击右下角 + 按钮添加新链接
+3. 使用分类筛选或搜索框快速查找链接
+4. 数据自动保存在浏览器本地存储中
+
+## 自定义
+
+- 修改 `style.css` 中的 CSS 变量来更改主题色彩
+- 在 `script.js` 的 `navigationData` 中修改初始数据
+- 添加新的分类或修改现有分类
+
+## 部署
+
+可以直接部署到 GitHub Pages、Vercel、Netlify 等静态网站托管服务。
