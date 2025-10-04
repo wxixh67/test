@@ -1,61 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人导航站</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>导航站</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <!-- 头部 -->
-        <header class="header">
-            <h1 class="title">我的导航站</h1>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="搜索网站...">
-                <i class="fas fa-search"></i>
-            </div>
-        </header>
-
-        <!-- 分类导航 -->
-        <nav class="category-nav" id="categoryNav">
-            <!-- 分类按钮将通过JS动态生成 -->
-        </nav>
-
-        <!-- 链接网格 -->
-        <main class="main-content">
-            <div class="links-grid" id="linksGrid">
-                <!-- 链接卡片将通过JS动态生成 -->
-            </div>
-        </main>
-
-        <!-- 添加链接按钮 -->
-        <button class="add-btn" id="addBtn">
-            <i class="fas fa-plus"></i>
-        </button>
-
-        <!-- 添加链接的模态框 -->
-        <div class="modal" id="addModal">
-            <div class="modal-content">
-                <h3>添加新链接</h3>
-                <form id="linkForm">
-                    <input type="text" id="linkName" placeholder="网站名称" required>
-                    <input type="url" id="linkUrl" placeholder="网址 (https://...)" required>
-                    <select id="linkCategory" required>
-                        <option value="">选择分类</option>
-                        <!-- 分类选项将通过JS动态生成 -->
-                    </select>
-                    <input type="color" id="linkColor" value="#4f46e5">
-                    <div class="form-actions">
-                        <button type="button" id="cancelBtn">取消</button>
-                        <button type="submit">添加</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+<body class="bg-gray-100 flex flex-col items-center min-h-screen p-6">
+  
+  <!-- Logo -->
+  <div class="w-24 h-24 rounded-full bg-blue-400 mb-4"></div>
+  
+  <!-- 标题/搜索框 -->
+  <div class="w-64 h-12 bg-white shadow-md rounded-lg flex items-center justify-center mb-8">
+    <span class="text-gray-600">搜索 / 标题</span>
+  </div>
+  
+  <!-- 导航列表 -->
+  <div class="space-y-4 w-full max-w-md">
+    <a href="#" class="block bg-white rounded-xl shadow p-4 text-center hover:bg-blue-100">导航一</a>
+    <a href="#" class="block bg-white rounded-xl shadow p-4 text-center hover:bg-blue-100">导航二</a>
+    <a href="#" class="block bg-white rounded-xl shadow p-4 text-center hover:bg-blue-100">导航三</a>
+    <a href="#" class="block bg-white rounded-xl shadow p-4 text-center hover:bg-blue-100">导航四</a>
+  </div>
+  
 </body>
 </html>
