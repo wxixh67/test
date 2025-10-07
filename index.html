@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人主页</title>
+    <title>脸书账号登录教学+问题解决方案</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #1877f2;
+            --primary-dark: #166fe5;
+            --primary-darker: #0d5bbc;
+            --secondary-color: #42b72a;
+            --secondary-dark: #36a420;
+            --secondary-darker: #2c8a1c;
+            --background-color: #f0f2f5;
+            --card-color: #ffffff;
+            --text-color: #1c1e21;
+            --text-light: #65676b;
+            --border-color: #e4e6eb;
+            --teaching-bg: #e3f2fd;
+            --issues-bg: #e8f5e9;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 15px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,26 +36,559 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 900px;
-            width: 100%;
-            animation: fadeIn 0.8s ease-out;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        @keyframes fadeIn {
+        /* 页面背景渐变动画 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            z-index: -1;
+            opacity: 0.05;
+            animation: backgroundPulse 8s infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% { opacity: 0.05; }
+            100% { opacity: 0.1; }
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(3deg);
+            transition: var(--transition);
+        }
+
+        header:hover {
+            transform: perspective(1000px) rotateX(0);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.15), transparent 70%);
+            z-index: 0;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .hint-banner {
+            background-color: var(--card-color);
+            border-left: 3px solid var(--primary-color);
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .hint-banner:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .hint-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .hint-banner i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-button {
+            padding: 0.7rem 1.3rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .nav-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-button:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+            background-color: var(--primary-darker);
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+            transition: 0.5s;
+        }
+
+        .friendship-button {
+            padding: 0.7rem 1.3rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .friendship-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .friendship-button:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .friendship-button:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+            background-color: var(--secondary-darker);
+        }
+
+        .friendship-button:hover::before {
+            left: 100%;
+            transition: 0.5s;
+        }
+
+        .content-section {
+            background-color: var(--teaching-bg);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .content-section:last-child {
+            background-color: var(--issues-bg);
+        }
+
+        .content-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .section-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            background-color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .content-section:hover .section-icon {
+            transform: rotateY(5deg);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+
+        .content-section:hover .section-title {
+            text-shadow: 0 0 8px rgba(24, 119, 242, 0.2);
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .card {
+            background-color: var(--card-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card:hover .card-inner {
+            transform: rotateY(5deg);
+        }
+
+        .teaching-card .card-content {
+            padding: 1.3rem;
+        }
+
+        .teaching-card .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: var(--radius-lg);
+            margin-left: 0.4rem;
+            font-weight: 600;
+        }
+
+        .badge-hot {
+            background-color: #ff4444;
+            color: white;
+        }
+
+        .badge-wip {
+            background-color: #ffc107;
+            color: var(--text-color);
+        }
+
+        .teaching-card .card-description {
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .card-button {
+            padding: 0.9rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        .card-button.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .card-button.primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .card-button.primary:active {
+            background-color: var(--primary-darker);
+            transform: scale(0.98);
+        }
+
+        .card-button.primary:hover::before {
+            left: 100%;
+        }
+
+        .card-button.secondary {
+            background-color: #e7f3ff;
+            color: var(--primary-color);
+            border: 1px solid #dbe2ef;
+        }
+
+        .card-button.secondary:hover {
+            background-color: #dbe2ef;
+        }
+
+        .card-button.secondary:active {
+            background-color: #cce5ff;
+            transform: scale(0.98);
+        }
+
+        .card-button.secondary:hover::before {
+            left: 100%;
+        }
+
+        .problem-card .problem-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .problem-card .problem-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.4s;
+        }
+
+        .problem-card:hover .problem-image {
+            transform: scale(1.03) rotate(0.5deg);
+        }
+
+        .image-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: var(--transition);
+        }
+
+        .problem-card:hover .image-label {
+            background-color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 2rem;
+            background-color: var(--card-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        footer:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        /* 弹窗样式优化 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            overflow: auto;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: block;
+        }
+
+        .modal-content-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+            perspective: 1000px;
+        }
+
+        .modal-content {
+            max-width: 85%;
+            max-height: 85vh;
+            border-radius: var(--radius-md);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transform: scale(0.95);
+            transition: transform 0.5s ease;
+            animation: modalFadeIn 0.4s ease-out;
+        }
+
+        @keyframes modalFadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(0.95);
+            }
+        }
+
+        .close-button {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            transform: rotate(90deg);
+        }
+
+        .new-warning-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .new-warning-modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .new-warning-content {
+            background-color: var(--card-color);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            animation: modalSlideUp 0.4s ease-out;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -39,250 +596,664 @@
             }
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 60px 50px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
-
-        .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .new-warning-header {
+            padding: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--primary-color);
+            color: white;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 60px;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
+            gap: 0.8rem;
         }
 
-        .avatar:hover {
-            transform: scale(1.05) rotate(5deg);
+        .new-warning-body {
+            padding: 1.2rem;
         }
 
-        h1 {
-            font-size: 42px;
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 20px;
-            color: #718096;
-            margin-bottom: 30px;
-        }
-
-        .bio {
-            font-size: 16px;
-            color: #4a5568;
-            line-height: 1.8;
-            margin-bottom: 40px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .links {
+        .new-warning-footer {
+            padding: 0.9rem 1.2rem;
+            border-top: 1px solid var(--border-color);
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 40px;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            background-color: #f8f9fa;
         }
 
-        .link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
+        .new-warning-button {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-sm);
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
 
-        .link-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        .new-warning-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
-        .link-btn svg {
-            width: 20px;
-            height: 20px;
+        .new-warning-button.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
         }
 
-        .social-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .new-warning-button.primary:hover {
+            background-color: var(--primary-dark);
         }
 
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #f7fafc;
+        .new-warning-button.primary:active {
+            background-color: var(--primary-darker);
+            transform: scale(0.98);
+        }
+
+        .new-warning-button.primary:hover::before {
+            left: 100%;
+        }
+
+        .new-warning-button.secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .new-warning-button.secondary:hover {
+            background-color: #f0f3ff;
+        }
+
+        .new-warning-button.secondary:active {
+            background-color: #e6f0ff;
+            transform: scale(0.98);
+        }
+
+        .new-warning-button.secondary:hover::before {
+            left: 100%;
+        }
+
+        .new-warning-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .new-warning-close:hover {
+            color: #ff4444;
+        }
+
+        .alert-popup {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background-color: var(--card-color);
+            color: var(--text-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            gap: 0.8rem;
+            max-width: 350px;
+            border-left: 3px solid var(--primary-color);
         }
 
-        .social-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        .alert-popup.show {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+            animation: slideUp 0.4s ease-out;
         }
 
-        .social-btn.github { color: #333; }
-        .social-btn.twitter { color: #1da1f2; }
-        .social-btn.linkedin { color: #0077b5; }
-        .social-btn.email { color: #ea4335; }
-        .social-btn.telegram { color: #0088cc; }
-
-        .social-btn:hover {
-            background: currentColor;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
         }
 
-        .social-btn:hover svg {
-            fill: white;
+        .alert-popup i {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            animation: pulse 1.5s infinite;
         }
 
-        .social-btn svg {
-            width: 24px;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .alert-popup p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* 页面内容动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 页面固定宽度 */
+        .page-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 新增的开关样式 */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding: 0.8rem 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .toggle-container:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+            background-color: white;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .toggle-icon {
+            color: var(--primary-color);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
             height: 24px;
-            fill: currentColor;
-            transition: fill 0.3s ease;
         }
 
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #cbd5e0, transparent);
-            margin: 30px 0;
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .footer {
-            margin-top: 30px;
-            color: #a0aec0;
-            font-size: 14px;
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transition: .4s;
+            border-radius: 24px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        @media (max-width: 768px) {
-            .card {
-                padding: 40px 30px;
-            }
-
-            h1 {
-                font-size: 32px;
-            }
-
-            .subtitle {
-                font-size: 18px;
-            }
-
-            .links {
-                flex-direction: column;
-            }
-
-            .link-btn {
-                width: 100%;
-                justify-content: center;
-            }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+        input:checked + .toggle-slider {
+            background-color: var(--primary-color);
         }
 
-        @keyframes floating {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* 高级选项卡片 */
+        .advanced-option {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .advanced-option.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 优化卡片悬停效果 */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 优化按钮图标间距 */
+        .nav-button i, .friendship-button i, .card-button i {
+            transition: transform 0.2s ease;
+        }
+
+        .nav-button:hover i, .friendship-button:hover i, .card-button:hover i {
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="avatar floating">
-                👋
+    <div class="page-wrapper">
+        <header class="fade-in">
+            <h1><i class="fab fa-facebook-square"></i> 脸书账号登录教学+问题解决方案</h1>
+            <p>一站式解决您的脸书账号问题，提供详细教程和常见问题解决方案</p>
+        </header>
+
+        <div class="hint-banner fade-in">
+            <i class="fas fa-info-circle"></i> 点击下方分类查看更多内容，解决您的脸书登录问题
+        </div>
+
+        <div class="nav-buttons fade-in">
+            <button class="nav-button" onclick="scrollToSection('tutorials')">
+                <i class="fas fa-graduation-cap"></i> 登录教学
+            </button>
+            <button class="nav-button" onclick="scrollToSection('issues')">
+                <i class="fas fa-exclamation-triangle"></i> 登录问题
+            </button>
+            <button class="nav-button" onclick="showNewWarningModal()">
+                <i class="fas fa-search"></i> 检测账号是否180
+            </button>
+
+            <a href="http://pubgmgj.xyz" target="_blank" class="friendship-button">
+                <i class="fas fa-download"></i> 各类app应用下载+实用工具
+            </a>
+        </div>
+
+        <div id="tutorials" class="content-section fade-in">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h2 class="section-title">脸书登录教学</h2>
             </div>
             
-            <h1>你的名字</h1>
-            <div class="subtitle">全栈开发者 / 设计师 / 创作者</div>
+            <!-- 优化后的开关控制区域 -->
+            <div class="toggle-container">
+                <span class="toggle-label">
+                    <i class="fas fa-cog toggle-icon"></i> 
+                    选择是否显示其他登录方式
+                </span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="advancedToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
             
-            <p class="bio">
-                欢迎来到我的个人主页！我是一名热爱技术和创新的开发者，专注于创造优雅的数字体验。
-                在这里你可以了解我的项目、文章和联系方式。
-            </p>
+            <div class="card-container">
+                <div class="teaching-card card">
+                    <div class="card-inner">
+                        <div class="card-content">
+                            <h3 class="card-title">带密钥[2fa]使用教学 <span class="badge badge-hot">热门</span></h3>
+                            <p class="card-description">详细讲解如何使用双因素认证密钥登录脸书账号。</p>
+                            <div class="card-actions">
+                                <a href="教学2.html" class="card-button primary">
+                                    <i class="fas fa-book-open"></i> 查看教程
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="links">
-                <a href="https://github.com/yourusername" class="link-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    GitHub 仓库
-                </a>
-                
-                <a href="#" class="link-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 18.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm1.961-5.928c-.904.975-.947 1.514-.935 2.178h-2.005c-.007-1.475.02-2.125 1.431-3.468.573-.544 1.025-.975.962-1.821-.058-.805-.73-1.226-1.365-1.226-.709 0-1.538.527-1.538 2.013h-2.01c0-2.4 1.409-3.95 3.59-3.95 1.036 0 1.942.339 2.55.955.57.578.865 1.372.854 2.298-.016 1.383-.857 2.291-1.534 3.021z"/>
-                    </svg>
-                    我的博客
-                </a>
+                <div class="teaching-card card advanced-option">
+                    <div class="card-inner">
+                        <div class="card-content">
+                            <h3 class="card-title">无密钥[2fa]使用教学 <span class="badge badge-wip">未完善</span></h3>
+                            <p class="card-description">无双因素认证情况下的脸书账号登录方法，适合没有设置2FA的用户。</p>
+                            <div class="card-actions">
+                                <button class="card-button secondary" onclick="showIncompleteAlert()">
+                                    <i class="fas fa-book-open"></i> 查看教程
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <a href="#" class="link-btn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm-1-7.9c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.6 1.3-1.3 1.3zM17 17h-2v-3.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5V17h-2v-7h2v1c.5-.8 1.4-1.3 2.5-1.3 1.9 0 3.5 1.6 3.5 3.5V17z"/>
-                    </svg>
-                    项目作品
-                </a>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="social-links">
-                <a href="https://github.com/yourusername" class="social-btn github" title="GitHub">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                </a>
-
-                <a href="https://twitter.com/yourusername" class="social-btn twitter" title="Twitter">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                    </svg>
-                </a>
-
-                <a href="mailto:your.email@example.com" class="social-btn email" title="Email">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                </a>
-
-                <a href="https://t.me/yourusername" class="social-btn telegram" title="Telegram">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
-                </a>
-            </div>
-
-            <div class="footer">
-                © 2025 你的名字. Made with ❤️
+                <div class="teaching-card card advanced-option">
+                    <div class="card-inner">
+                        <div class="card-content">
+                            <h3 class="card-title">Cookie使用教学 <span class="badge badge-hot">热门</span></h3>
+                            <p class="card-description">通过Cookie快速登录脸书账号的方法，适合开发者或高级用户。</p>
+                            <div class="card-actions">
+                                <a href="登录3.html" class="card-button primary">
+                                    <i class="fas fa-book-open"></i> 查看教程
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div id="issues" class="content-section fade-in">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="section-title">脸书登录时出现的问题</h2>
+            </div>
+            <div class="card-container">
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('http://wang.xn--rgv956g.com/view.php/e830f19764fc401297b85208e388de7b.jpg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="http://wang.xn--rgv956g.com/view.php/e830f19764fc401297b85208e388de7b.jpg" alt="登录出现其他设备验证" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=登录出现其他设备验证'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">登录出现其他设备验证</h3>
+                            <div class="card-actions">
+                                <a href="登录1-1.html" class="card-button primary">
+                                    <i class="fas fa-key"></i> 带密钥版解决方案
+                                </a>
+                                <a href="登录1-2.html" class="card-button secondary">
+                                    <i class="far fa-key"></i> 不带密钥版解决方案
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('http://wang.xn--rgv956g.com/view.php/b3271bb4a66acd3541c17e30bdb978c2.jpg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="http://wang.xn--rgv956g.com/view.php/b3271bb4a66acd3541c17e30bdb978c2.jpg" alt="无法登录" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=无法登录'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">无法登录</h3>
+                            <div class="card-actions">
+                                <a href="问题3.html" class="card-button primary">
+                                    <i class="fas fa-wrench"></i> 查看解决方法
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('http://wang.xn--rgv956g.com/view.php/24f61ca5f0c2aad8bd82d78376401fb2.jpg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="http://wang.xn--rgv956g.com/view.php/24f61ca5f0c2aad8bd82d78376401fb2.jpg" alt="登录游戏时出现错误情况" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=登录游戏时出现错误情况'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">登录游戏时出现错误情况</h3>
+                            <div class="card-actions">
+                                <a href="问题4.html" class="card-button primary">
+                                    <i class="fas fa-wrench"></i> 查看解决方法
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('http://wang.xn--rgv956g.com/view.php/1d7f1ea4d428a6f8effe4b781d5e99d1.jpg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="http://wang.xn--rgv956g.com/view.php/1d7f1ea4d428a6f8effe4b781d5e99d1.jpg" alt="登录信息出现错误" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=登录信息出现错误'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">登录信息出现错误（密码或账号错误）</h3>
+                            <div class="card-actions">
+                                <a href="问题2.html" class="card-button primary">
+                                    <i class="fas fa-wrench"></i> 查看解决方法
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('http://wang.xn--rgv956g.com/view.php/91ee483a9b47ac7221fccc44dba36b42.jpeg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="http://wang.xn--rgv956g.com/view.php/91ee483a9b47ac7221fccc44dba36b42.jpeg" alt="首次登录需要手机号验证码" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=首次登录需要手机号验证码'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">首次登录需要手机号验证码</h3>
+                            <div class="card-actions">
+                                <a href="问题5.html" class="card-button primary">
+                                    <i class="fas fa-wrench"></i> 查看解决方法
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="problem-card card">
+                    <div class="card-inner">
+                        <div class="problem-image-container" onclick="openModal('https://wang.xn--rgv956g.com/view.php/c2ed3a483ce71fcbf6450f0ba81dbad5.jpg')">
+                            <span class="image-label"><i class="fas fa-camera"></i> 示例图片</span>
+                            <img src="https://wang.xn--rgv956g.com/view.php/c2ed3a483ce71fcbf6450f0ba81dbad5.jpg" alt="找回失败" class="problem-image" onerror="this.src='https://via.placeholder.com/600x400/1877F2/FFFFFF?text=找回失败'">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">找回失败</h3>
+                            <div class="card-actions">
+                                <a href="问题6.html" class="card-button primary">
+                                    <i class="fas fa-wrench"></i> 查看解决方法
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="fade-in">
+            <p>© 2025 脸书账号登录教学+问题解决方案 | 所有权利保留</p>
+            <p>本网站与Facebook/Meta公司无任何关联</p>
+        </footer>
     </div>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-content-container">
+            <img class="modal-content" id="modalImage">
+        </div>
+        <span class="close-button" onclick="closeModal()">&times;</span>
+    </div>
+
+    <div id="newWarningModal" class="new-warning-modal">
+        <div class="new-warning-content">
+            <div class="new-warning-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>重要提示</h3>
+            </div>
+            <div class="new-warning-body">
+                <p>此功能只能检测脸书ID账号是否存活，无法通过手机号或邮箱进行检测。请确保您已准备好要检测的脸书ID。</p>
+            </div>
+            <div class="new-warning-footer">
+                <button class="new-warning-button secondary" onclick="closeNewWarningModal()">取消</button>
+                <button class="new-warning-button primary" onclick="redirectToDetection()">继续前往检测</button>
+            </div>
+            <div class="new-warning-close" onclick="closeNewWarningModal()">&times;</div>
+        </div>
+    </div>
+
+    <div class="alert-popup" id="alertPopup">
+        <i class="fas fa-info-circle"></i>
+        <p>该功能正在积极开发中，敬请期待！</p>
+    </div>
+
+    <script>
+        // 页面滚动动画
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // 初始化开关状态 - 默认关闭
+            const toggle = document.getElementById('advancedToggle');
+            toggle.addEventListener('change', function() {
+                const advancedCards = document.querySelectorAll('.advanced-option');
+                if (this.checked) {
+                    advancedCards.forEach(card => {
+                        card.classList.add('show');
+                    });
+                } else {
+                    advancedCards.forEach(card => {
+                        card.classList.remove('show');
+                    });
+                }
+            });
+
+            // 添加开关点击动画效果
+            const toggleSlider = document.querySelector('.toggle-slider');
+            toggle.addEventListener('click', function() {
+                toggleSlider.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    toggleSlider.style.transform = '';
+                }, 200);
+            });
+        });
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function openModal(imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function showNewWarningModal() {
+            const modal = document.getElementById('newWarningModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeNewWarningModal() {
+            const modal = document.getElementById('newWarningModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        function redirectToDetection() {
+            const button = document.querySelector('.new-warning-button.primary');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在跳转...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                window.location.href = "https://2fa.fan/detection.html";
+            }, 1000);
+        }
+
+        function showIncompleteAlert() {
+            const alertPopup = document.getElementById('alertPopup');
+            alertPopup.classList.add('show');
+            
+            setTimeout(() => {
+                alertPopup.classList.remove('show');
+            }, 3000);
+        }
+
+        document.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('imageModal')) {
+                closeModal();
+            }
+            if (event.target === document.getElementById('newWarningModal')) {
+                closeNewWarningModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+                closeNewWarningModal();
+            }
+        });
+
+        // 添加按钮点击效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button, .card-button, .new-warning-button');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.98)';
+                    this.style.boxShadow = 'inset 0 2px 5px rgba(0, 0, 0, 0.2)';
+                });
+                
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
