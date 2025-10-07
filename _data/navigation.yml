@@ -1,0 +1,15 @@
+- title: Twitter
+  url: https://twitter.com/yourname
+  icon: https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/twitter.svg
+
+- title: GitHub
+  url: https://github.com/yourname
+  icon: https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/github.svg
+
+- title: Stack Overflow
+  url: https://stackoverflow.com/users/yourid/yourname
+  icon: https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/stackoverflow.svg
+
+- title: 个人博客
+  url: https://yourblog.com
+  icon: https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/notion.svg

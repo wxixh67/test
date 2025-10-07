@@ -1,0 +1,29 @@
+---
+layout: default
+title: "Personal Nav"
+permalink: /
+---
+
+<style>
+  body {font-family: Arial, sans-serif; margin: 2rem;}
+  .nav {display: flex; flex-wrap: wrap; gap: 1.5rem;}
+  .link-card {background:#f9f9f9; padding:1rem 1.5rem; border-radius:4px; flex:1 1 200px;}
+  .link-card a {text-decoration:none; color:#333;}
+  .link-card a:hover {text-decoration:underline;}
+</style>
+
+<h1>{{ page.title }}</h1>
+
+<div class="nav">
+  {% assign links = site.data.navigation %}
+  {% for link in links %}
+  <div class="link-card">
+    <a href="{{ link.url }}" target="_blank" rel="noopener">
+      {% if link.icon %}
+        <img src="{{ link.icon }}" alt="{{ link.title }}" style="height:1.2rem;margin-right:.5rem;">
+      {% endif %}
+      {{ link.title }}
+    </a>
+  </div>
+  {% endfor %}
+</div>
