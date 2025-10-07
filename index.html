@@ -1,77 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Future Nav | sjwv</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Core styles will be in the CSS section */
-    </style>
+    <title>个人导航站</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Time Display -->
+    <div id="app">
+        <!-- 顶部时间显示 -->
         <div class="time-display">
-            <div id="current-time"></div>
-            <div class="user-info">Welcome, sjwv</div>
+            <span id="current-time"></span>
         </div>
 
-        <!-- Search Section -->
-        <div class="search-container">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search" placeholder="Press '/' to search...">
-            </div>
+        <!-- 搜索框 -->
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="快速搜索...">
         </div>
 
-        <!-- Navigation Grid -->
-        <div class="nav-grid">
-            <!-- Development Section -->
-            <div class="nav-section">
-                <h2>Development</h2>
-                <div class="card-container">
-                    <a href="https://github.com" class="nav-card">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://stackoverflow.com" class="nav-card">
-                        <i class="fab fa-stack-overflow"></i>
-                        <span>Stack Overflow</span>
-                    </a>
-                </div>
+        <!-- 导航卡片区域 -->
+        <div class="navigation">
+            <div class="nav-card">
+                <div class="icon">📧</div>
+                <div class="description">邮箱</div>
             </div>
-
-            <!-- Productivity Section -->
-            <div class="nav-section">
-                <h2>Productivity</h2>
-                <div class="card-container">
-                    <a href="https://gmail.com" class="nav-card">
-                        <i class="far fa-envelope"></i>
-                        <span>Gmail</span>
-                    </a>
-                    <a href="https://calendar.google.com" class="nav-card">
-                        <i class="far fa-calendar"></i>
-                        <span>Calendar</span>
-                    </a>
-                </div>
+            <div class="nav-card">
+                <div class="icon">🌐</div>
+                <div class="description">网站</div>
             </div>
-
-            <!-- Social Section -->
-            <div class="nav-section">
-                <h2>Social</h2>
-                <div class="card-container">
-                    <a href="https://twitter.com" class="nav-card">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="https://linkedin.com" class="nav-card">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
+            <div class="nav-card">
+                <div class="icon">📅</div>
+                <div class="description">日历</div>
             </div>
         </div>
     </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>

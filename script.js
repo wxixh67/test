@@ -1,27 +1,21 @@
-// Update time display
+// 动态更新时间显示
 function updateTime() {
-    const now = new Date();
-    const timeString = now.toISOString().replace('T', ' ').slice(0, 19);
-    document.getElementById('current-time').textContent = timeString;
+    const currentTime = new Date();
+    const formattedTime = currentTime.getFullYear() + '-' +
+        String(currentTime.getMonth() + 1).padStart(2, '0') + '-' +
+        String(currentTime.getDate()).padStart(2, '0') + ' ' +
+        String(currentTime.getHours()).padStart(2, '0') + ':' +
+        String(currentTime.getMinutes()).padStart(2, '0') + ':' +
+        String(currentTime.getSeconds()).padStart(2, '0');
+    document.getElementById('current-time').textContent = formattedTime;
 }
 
-// Initialize time display and update every second
-updateTime();
+// 每秒更新时间
 setInterval(updateTime, 1000);
+updateTime();
 
-// Search functionality
-document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement !== document.getElementById('search')) {
-        e.preventDefault();
-        document.getElementById('search').focus();
-    }
-});
-
-document.getElementById('search').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        const query = e.target.value;
-        if (query) {
-            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-        }
-    }
+// 搜索框动态提示
+document.getElementById('search').addEventListener('input', function(event) {
+    const query = event.target.value;
+    console.log('搜索内容: ', query); // 这里可以将搜索内容与实际功能绑定
 });

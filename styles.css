@@ -1,152 +1,106 @@
-/* Base Styles */
-:root {
-    --primary-bg: #0a0a0a;
-    --card-bg: #1a1a1a;
-    --text-primary: #ffffff;
-    --text-secondary: #a0a0a0;
-    --accent-color: #00ff9d;
-    --glow-color: rgba(0, 255, 157, 0.2);
-}
-
+/* 重置样式 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 body {
-    background-color: var(--primary-bg);
-    color: var(--text-primary);
-    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #fff;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-/* Time Display Styles */
-.time-display {
+#app {
     text-align: center;
-    margin-bottom: 3rem;
 }
 
-#current-time {
-    font-size: 3rem;
-    font-weight: 300;
-    color: var(--accent-color);
-    text-shadow: 0 0 10px var(--glow-color);
-    margin-bottom: 0.5rem;
-}
-
-.user-info {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
-/* Search Bar Styles */
-.search-container {
-    margin-bottom: 3rem;
-}
-
-.search-bar {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    max-width: 600px;
-    margin: 0 auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.search-bar i {
-    color: var(--text-secondary);
-    margin-right: 1rem;
-}
-
-.search-bar input {
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    width: 100%;
-    font-size: 1rem;
-    outline: none;
-}
-
-/* Navigation Grid Styles */
-.nav-grid {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-.nav-section h2 {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
-
-.card-container {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-}
-
-.nav-card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: var(--text-primary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-card i {
+/* 时间显示样式 */
+.time-display {
     font-size: 1.5rem;
-    color: var(--accent-color);
+    color: #fff;
+    margin-bottom: 30px;
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+}
+
+/* 搜索框样式 */
+.search-bar input {
+    width: 80%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: #fff;
+    outline: none;
+    transition: background-color 0.3s;
+}
+
+.search-bar input::placeholder {
+    color: #aaa;
+}
+
+.search-bar input:focus {
+    background-color: #555;
+}
+
+/* 导航卡片布局 */
+.navigation {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+}
+
+/* 单个导航卡片 */
+.nav-card {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .nav-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px var(--glow-color);
-    border-color: var(--accent-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.5);
 }
 
-/* Responsive Design */
+.nav-card .icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #00fff7;
+}
+
+.nav-card .description {
+    font-size: 1rem;
+    color: #fff;
+}
+
+/* 响应式设计 */
 @media (max-width: 768px) {
-    #current-time {
-        font-size: 2rem;
+    .time-display {
+        font-size: 1.2rem;
     }
 
-    .nav-section {
-        padding: 1rem;
+    .search-bar input {
+        width: 100%;
     }
 
-    .card-container {
+    .navigation {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 1rem;
-    }
-
-    .card-container {
+    .navigation {
         grid-template-columns: 1fr;
     }
 }
