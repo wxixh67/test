@@ -1,15 +1,27 @@
-// 动态显示当前时间
+// Update time display
 function updateTime() {
-  const now = new Date();
-  const timeString = now.getFullYear() + '-' + 
-                     String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                     String(now.getDate()).padStart(2, '0') + ' ' + 
-                     String(now.getHours()).padStart(2, '0') + ':' + 
-                     String(now.getMinutes()).padStart(2, '0') + ':' + 
-                     String(now.getSeconds()).padStart(2, '0');
-  document.getElementById('current-time').textContent = timeString;
+    const now = new Date();
+    const timeString = now.toISOString().replace('T', ' ').slice(0, 19);
+    document.getElementById('current-time').textContent = timeString;
 }
 
-// 每秒更新一次时间
+// Initialize time display and update every second
+updateTime();
 setInterval(updateTime, 1000);
-updateTime(); // 初始化时立即显示时间
+
+// Search functionality
+document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== document.getElementById('search')) {
+        e.preventDefault();
+        document.getElementById('search').focus();
+    }
+});
+
+document.getElementById('search').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        const query = e.target.value;
+        if (query) {
+            window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+        }
+    }
+});

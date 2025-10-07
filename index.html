@@ -1,41 +1,77 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>个人导航页面</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Nav | sjwv</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Core styles will be in the CSS section */
+    </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 时间显示 -->
-    <div class="time-display">
-      <span id="current-time">加载中...</span>
-    </div>
+    <div class="container">
+        <!-- Time Display -->
+        <div class="time-display">
+            <div id="current-time"></div>
+            <div class="user-info">Welcome, sjwv</div>
+        </div>
 
-    <!-- 搜索框 -->
-    <div class="search-bar">
-      <input type="text" id="search-input" placeholder="搜索网站..." />
-    </div>
+        <!-- Search Section -->
+        <div class="search-container">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search" placeholder="Press '/' to search...">
+            </div>
+        </div>
 
-    <!-- 网站导航 -->
-    <div class="navigation">
-      <div class="nav-card">
-        <a href="https://github.com" target="_blank">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" alt="GitHub">
-          <p>GitHub</p>
-        </a>
-      </div>
-      <div class="nav-card">
-        <a href="https://www.google.com" target="_blank">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/google.svg" alt="Google">
-          <p>Google</p>
-        </a>
-      </div>
-      <!-- 更多导航卡片可按需求添加 -->
-    </div>
-  </div>
+        <!-- Navigation Grid -->
+        <div class="nav-grid">
+            <!-- Development Section -->
+            <div class="nav-section">
+                <h2>Development</h2>
+                <div class="card-container">
+                    <a href="https://github.com" class="nav-card">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://stackoverflow.com" class="nav-card">
+                        <i class="fab fa-stack-overflow"></i>
+                        <span>Stack Overflow</span>
+                    </a>
+                </div>
+            </div>
 
-  <script src="script.js"></script>
+            <!-- Productivity Section -->
+            <div class="nav-section">
+                <h2>Productivity</h2>
+                <div class="card-container">
+                    <a href="https://gmail.com" class="nav-card">
+                        <i class="far fa-envelope"></i>
+                        <span>Gmail</span>
+                    </a>
+                    <a href="https://calendar.google.com" class="nav-card">
+                        <i class="far fa-calendar"></i>
+                        <span>Calendar</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Social Section -->
+            <div class="nav-section">
+                <h2>Social</h2>
+                <div class="card-container">
+                    <a href="https://twitter.com" class="nav-card">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    <a href="https://linkedin.com" class="nav-card">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
