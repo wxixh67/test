@@ -1,79 +1,41 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="专业的商务导航站，提供行业新闻、金融投资、市场营销等重要资源链接。">
-    <title>商务导航站</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人导航页面</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="container">
+    <!-- 时间显示 -->
+    <div class="time-display">
+      <span id="current-time">加载中...</span>
+    </div>
 
-    <header>
-        <div class="container">
-            <h1>商务导航站</h1>
-            <nav>
-                <ul>
-                    <li><a href="#industry-news">行业新闻</a></li>
-                    <li><a href="#finance">金融投资</a></li>
-                    <li><a href="#marketing">市场营销</a></li>
-                    <li><a href="#management">企业管理</a></li>
-                    <li><a href="#recruitment">招聘信息</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <!-- 搜索框 -->
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="搜索网站..." />
+    </div>
 
-    <main>
-        <section id="industry-news">
-            <h2>行业新闻</h2>
-            <ul>
-                <li><a href="#">行业新闻链接1</a></li>
-                <li><a href="#">行业新闻链接2</a></li>
-                <li><a href="#">行业新闻链接3</a></li>
-            </ul>
-        </section>
+    <!-- 网站导航 -->
+    <div class="navigation">
+      <div class="nav-card">
+        <a href="https://github.com" target="_blank">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/github.svg" alt="GitHub">
+          <p>GitHub</p>
+        </a>
+      </div>
+      <div class="nav-card">
+        <a href="https://www.google.com" target="_blank">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/google.svg" alt="Google">
+          <p>Google</p>
+        </a>
+      </div>
+      <!-- 更多导航卡片可按需求添加 -->
+    </div>
+  </div>
 
-        <section id="finance">
-            <h2>金融投资</h2>
-            <ul>
-                <li><a href="#">投资机会链接1</a></li>
-                <li><a href="#">投资机会链接2</a></li>
-                <li><a href="#">投资机会链接3</a></li>
-            </ul>
-        </section>
-
-        <section id="marketing">
-            <h2>市场营销</h2>
-            <ul>
-                <li><a href="#">营销资源链接1</a></li>
-                <li><a href="#">营销资源链接2</a></li>
-                <li><a href="#">营销资源链接3</a></li>
-            </ul>
-        </section>
-
-        <section id="management">
-            <h2>企业管理</h2>
-            <ul>
-                <li><a href="#">管理技巧链接1</a></li>
-                <li><a href="#">管理技巧链接2</a></li>
-                <li><a href="#">管理技巧链接3</a></li>
-            </ul>
-        </section>
-
-        <section id="recruitment">
-            <h2>招聘信息</h2>
-            <ul>
-                <li><a href="#">职位信息链接1</a></li>
-                <li><a href="#">职位信息链接2</a></li>
-                <li><a href="#">职位信息链接3</a></li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 商务导航站 | 所有权利保留</p>
-    </footer>
-
+  <script src="script.js"></script>
 </body>
 </html>
