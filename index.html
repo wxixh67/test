@@ -1,29 +1,549 @@
----
-layout: default
-title: "Personal Nav"
-permalink: /
----
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片画廊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-  body {font-family: Arial, sans-serif; margin: 2rem;}
-  .nav {display: flex; flex-wrap: wrap; gap: 1.5rem;}
-  .link-card {background:#f9f9f9; padding:1rem 1.5rem; border-radius:4px; flex:1 1 200px;}
-  .link-card a {text-decoration:none; color:#333;}
-  .link-card a:hover {text-decoration:underline;}
-</style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
 
-<h1>{{ page.title }}</h1>
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-<div class="nav">
-  {% assign links = site.data.navigation %}
-  {% for link in links %}
-  <div class="link-card">
-    <a href="{{ link.url }}" target="_blank" rel="noopener">
-      {% if link.icon %}
-        <img src="{{ link.icon }}" alt="{{ link.title }}" style="height:1.2rem;margin-right:.5rem;">
-      {% endif %}
-      {{ link.title }}
-    </a>
-  </div>
-  {% endfor %}
-</div>
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tab {
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .tab.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        .tab-count {
+            opacity: 0.6;
+            margin-left: 5px;
+            font-size: 12px;
+        }
+
+        .gallery-container {
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .waterfall {
+            position: relative;
+            width: 100%;
+        }
+
+        .waterfall-item {
+            position: absolute;
+            width: calc(25% - 15px);
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .waterfall-item.loaded {
+            opacity: 1;
+        }
+
+        .waterfall-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .waterfall-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 15px;
+            border-radius: 0 0 8px 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .waterfall-item:hover .item-overlay {
+            opacity: 1;
+        }
+
+        .item-category {
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: 500;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1200px) {
+            .waterfall-item {
+                width: calc(33.333% - 13.333px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .waterfall-item {
+                width: calc(50% - 10px);
+            }
+            .header {
+                padding: 15px;
+            }
+            .tab {
+                padding: 6px 15px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .waterfall-item {
+                width: 100%;
+            }
+            .gallery-container {
+                margin-top: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="category-tabs" id="categoryTabs"></div>
+    </div>
+
+    <div class="gallery-container">
+        <div class="waterfall" id="waterfall"></div>
+        <div class="loading" id="loading">加载中...</div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-close" onclick="closeLightbox()">×</div>
+        <div class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</div>
+        <div class="lightbox-content">
+            <img class="lightbox-image" id="lightboxImage" src="" alt="">
+        </div>
+        <div class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</div>
+        <div class="lightbox-info" id="lightboxInfo"></div>
+    </div>
+
+    <script>
+        // 图片数据（请替换为您的实际数据）
+        const imageData = [
+            {src:"./Durandal/16_00016_4161595835.png", category:"Durandal"},
+            {src:"./Durandal/17_00017_4161595836.png", category:"Durandal"},
+            // ... 在这里添加您的5000张图片数据
+        ];
+
+        // 全局状态
+        let currentCategory = 'all';
+        let filteredImages = [...imageData];
+        let displayedImages = [];
+        let columnHeights = [];
+        let columns = 4;
+        let currentLightboxIndex = 0;
+        let isLoading = false;
+        let hasMore = true;
+
+        // 初始化
+        function init() {
+            calculateColumns();
+            generateCategoryTabs();
+            loadMoreImages();
+            setupScrollListener();
+            setupResizeListener();
+            setupKeyboardNavigation();
+        }
+
+        // 计算列数
+        function calculateColumns() {
+            const width = window.innerWidth;
+            if (width < 480) columns = 1;
+            else if (width < 768) columns = 2;
+            else if (width < 1200) columns = 3;
+            else columns = 4;
+            
+            columnHeights = new Array(columns).fill(0);
+        }
+
+        // 生成分类标签
+        function generateCategoryTabs() {
+            const categories = {};
+            imageData.forEach(img => {
+                categories[img.category] = (categories[img.category] || 0) + 1;
+            });
+
+            const tabsContainer = document.getElementById('categoryTabs');
+            let html = `<div class="tab active" onclick="filterCategory('all')">
+                全部 <span class="tab-count">(${imageData.length})</span>
+            </div>`;
+
+            Object.entries(categories).sort().forEach(([cat, count]) => {
+                html += `<div class="tab" onclick="filterCategory('${cat}')">
+                    ${cat} <span class="tab-count">(${count})</span>
+                </div>`;
+            });
+
+            tabsContainer.innerHTML = html;
+        }
+
+        // 分类筛选
+        function filterCategory(category) {
+            currentCategory = category;
+            filteredImages = category === 'all' 
+                ? [...imageData] 
+                : imageData.filter(img => img.category === category);
+
+            // 更新标签状态
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.closest('.tab').classList.add('active');
+
+            // 重置画廊
+            displayedImages = [];
+            columnHeights = new Array(columns).fill(0);
+            document.getElementById('waterfall').innerHTML = '';
+            hasMore = true;
+            loadMoreImages();
+        }
+
+        // 加载更多图片
+        function loadMoreImages() {
+            if (isLoading || !hasMore) return;
+            
+            isLoading = true;
+            const start = displayedImages.length;
+            const batchSize = start === 0 ? 50 : 30;
+            const end = Math.min(start + batchSize, filteredImages.length);
+
+            if (start >= filteredImages.length) {
+                hasMore = false;
+                document.getElementById('loading').style.display = 'none';
+                isLoading = false;
+                return;
+            }
+
+            const batch = filteredImages.slice(start, end);
+            displayedImages = displayedImages.concat(batch);
+
+            batch.forEach((img, index) => {
+                createWaterfallItem(img, start + index);
+            });
+
+            setTimeout(() => {
+                isLoading = false;
+                if (end >= filteredImages.length) {
+                    hasMore = false;
+                    document.getElementById('loading').style.display = 'none';
+                }
+            }, 300);
+        }
+
+        // 创建瀑布流项目
+        function createWaterfallItem(imageObj, index) {
+            const item = document.createElement('div');
+            item.className = 'waterfall-item';
+            
+            const img = document.createElement('img');
+            img.src = imageObj.src;
+            img.loading = 'lazy';
+            img.alt = imageObj.category;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'item-overlay';
+            overlay.innerHTML = `<div class="item-category">${imageObj.category}</div>`;
+
+            item.appendChild(img);
+            item.appendChild(overlay);
+            item.onclick = () => openLightbox(index);
+
+            img.onload = () => {
+                positionItem(item, img);
+                setTimeout(() => item.classList.add('loaded'), 50);
+            };
+
+            document.getElementById('waterfall').appendChild(item);
+        }
+
+        // 定位瀑布流项目
+        function positionItem(item, img) {
+            const gap = 20;
+            const containerWidth = document.getElementById('waterfall').offsetWidth;
+            const itemWidth = (containerWidth - gap * (columns - 1)) / columns;
+            
+            // 找到最短列
+            const minHeight = Math.min(...columnHeights);
+            const columnIndex = columnHeights.indexOf(minHeight);
+
+            const left = columnIndex * (itemWidth + gap);
+            const top = minHeight;
+
+            item.style.left = left + 'px';
+            item.style.top = top + 'px';
+            item.style.width = itemWidth + 'px';
+
+            // 更新列高度
+            const itemHeight = (img.naturalHeight / img.naturalWidth) * itemWidth;
+            columnHeights[columnIndex] = top + itemHeight + gap;
+
+            // 更新容器高度
+            const maxHeight = Math.max(...columnHeights);
+            document.getElementById('waterfall').style.height = maxHeight + 'px';
+        }
+
+        // 滚动监听
+        function setupScrollListener() {
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const windowHeight = window.innerHeight;
+                        const docHeight = document.documentElement.scrollHeight;
+
+                        if (scrollTop + windowHeight > docHeight - 500) {
+                            loadMoreImages();
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+        }
+
+        // 窗口大小调整监听
+        function setupResizeListener() {
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    const oldColumns = columns;
+                    calculateColumns();
+                    if (oldColumns !== columns) {
+                        columnHeights = new Array(columns).fill(0);
+                        const items = document.querySelectorAll('.waterfall-item');
+                        items.forEach((item, index) => {
+                            const img = item.querySelector('img');
+                            if (img.complete) {
+                                positionItem(item, img);
+                            }
+                        });
+                    }
+                }, 250);
+            });
+        }
+
+        // 打开灯箱
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            preloadAdjacentImages();
+        }
+
+        // 关闭灯箱
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 更新灯箱内容
+        function updateLightbox() {
+            const img = displayedImages[currentLightboxIndex];
+            document.getElementById('lightboxImage').src = img.src;
+            document.getElementById('lightboxInfo').textContent = 
+                `${currentLightboxIndex + 1} / ${displayedImages.length} - ${img.category}`;
+        }
+
+        // 灯箱导航
+        function navigateLightbox(direction) {
+            currentLightboxIndex += direction;
+            if (currentLightboxIndex < 0) currentLightboxIndex = displayedImages.length - 1;
+            if (currentLightboxIndex >= displayedImages.length) currentLightboxIndex = 0;
+            updateLightbox();
+            preloadAdjacentImages();
+        }
+
+        // 预加载相邻图片
+        function preloadAdjacentImages() {
+            for (let i = -3; i <= 3; i++) {
+                const index = currentLightboxIndex + i;
+                if (index >= 0 && index < displayedImages.length) {
+                    const img = new Image();
+                    img.src = displayedImages[index].src;
+                }
+            }
+        }
+
+        // 键盘导航
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (!document.getElementById('lightbox').classList.contains('active')) return;
+                
+                if (e.key === 'Escape') closeLightbox();
+                else if (e.key === 'ArrowLeft') navigateLightbox(-1);
+                else if (e.key === 'ArrowRight') navigateLightbox(1);
+            });
+        }
+
+        // 点击背景关闭灯箱
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        // 启动应用
+        init();
+    </script>
+</body>
+</html>
